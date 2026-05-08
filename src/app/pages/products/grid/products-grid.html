@@ -1,0 +1,131 @@
+<!-- Empty state -->
+@if (products().length === 0) {
+  <div class="flex flex-col items-center justify-center py-32 px-5">
+    <p class="font-display font-light text-4xl text-maison-stone dark:text-dark-border mb-3">—</p>
+    <p class="font-sans text-sm text-maison-ash dark:text-dark-muted">
+      No pieces in this category yet.
+    </p>
+  </div>
+}
+
+<!-- Grid view -->
+@if (viewMode() === 'grid' && products().length > 0) {
+  <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+    @for (product of products(); track product.id; let i = $index) {
+      <article
+        class="group relative cursor-pointer border-b border-r border-maison-stone dark:border-dark-border"
+        [class.border-r-0]="(i + 1) % 2 === 0"
+        [class.md:border-r-0]="(i + 1) % 3 === 0"
+        [class.xl:border-r]="true"
+        [class.xl:border-r-0]="(i + 1) % 4 === 0"
+        (mouseenter)="mouseEnter.emit(product)"
+        (mouseleave)="mouseLeave.emit(product)"
+      >
+        <div class="relative overflow-hidden aspect-[3/4] bg-maison-cream dark:bg-dark-surface">
+          <img
+            [src]="product.primaryImage"
+            [alt]="product.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-0]="product.isHovered"
+            [class.opacity-100]="!product.isHovered"
+          />
+          <img
+            [src]="product.hoverImage"
+            [alt]="product.name + ' alt'"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-100]="product.isHovered"
+            [class.opacity-0]="!product.isHovered"
+          />
+          @if (product.tag) {
+            <span
+              class="absolute top-3 left-3 font-mono text-2xs tracking-wider uppercase px-2.5 py-1 bg-maison-white dark:bg-dark-surface text-maison-ink dark:text-dark-primary z-raised"
+            >
+              {{ product.tag }}
+            </span>
+          }
+          <div
+            class="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-maison-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350 ease-luxe"
+          >
+            <p class="font-mono text-2xs tracking-wider uppercase text-maison-white/60 mb-1">
+              {{ product.subCategory }}
+            </p>
+            <p class="font-display font-light text-lg text-maison-white leading-tight mb-3">
+              {{ product.name }}
+            </p>
+            <a
+              [routerLink]="['/product-details', product.id]"
+              [queryParams]="{ type: 'custom' }"
+              class="inline-flex items-center gap-2 font-mono text-2xs tracking-wider uppercase text-maison-white border border-maison-white/40 px-3 py-2 self-start hover:bg-accent hover:border-accent transition-colors duration-250 no-underline"
+            >
+              Inquire →
+            </a>
+          </div>
+        </div>
+      </article>
+    }
+  </div>
+}
+
+<!-- List view -->
+@if (viewMode() === 'list' && products().length > 0) {
+  <div class="divide-y divide-maison-stone dark:divide-dark-border">
+    @for (product of products(); track product.id) {
+      <article
+        class="group flex items-center gap-5 md:gap-8 px-5 py-4 md:px-8 md:py-5 hover:bg-maison-cream dark:hover:bg-dark-surface transition-colors duration-250 ease-luxe cursor-pointer"
+        (mouseenter)="mouseEnter.emit(product)"
+        (mouseleave)="mouseLeave.emit(product)"
+      >
+        <div
+          class="relative overflow-hidden w-16 h-20 md:w-24 md:h-32 flex-shrink-0 bg-maison-cream dark:bg-dark-surface"
+        >
+          <img
+            [src]="product.primaryImage"
+            [alt]="product.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+            [class.opacity-0]="product.isHovered"
+            [class.opacity-100]="!product.isHovered"
+          />
+          <img
+            [src]="product.hoverImage"
+            [alt]="product.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+            [class.opacity-100]="product.isHovered"
+            [class.opacity-0]="!product.isHovered"
+          />
+        </div>
+        <div class="flex-1 min-w-0">
+          <p
+            class="font-mono text-2xs tracking-wider uppercase text-maison-mist dark:text-dark-muted mb-1"
+          >
+            {{ product.category }} — {{ product.subCategory }}
+          </p>
+          <h3
+            class="font-display font-light tracking-tight leading-tight text-xl md:text-2xl text-maison-ink dark:text-dark-heading group-hover:text-maison-black transition-colors duration-250"
+          >
+            {{ product.name }}
+          </h3>
+          @if (product.tag) {
+            <span
+              class="inline-block mt-2 font-mono text-2xs tracking-wider uppercase px-2 py-0.5 border border-accent text-accent"
+            >
+              {{ product.tag }}
+            </span>
+          }
+        </div>
+        <div class="flex-shrink-0 flex items-center gap-4">
+          <a
+            routerLink="/contact"
+            [queryParams]="{ type: 'custom' }"
+            class="hidden sm:inline-flex items-center gap-2 font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary border border-maison-stone dark:border-dark-border px-4 py-2.5 hover:bg-maison-black hover:text-maison-white hover:border-maison-black dark:hover:bg-dark-heading dark:hover:text-dark-base transition-all duration-250 no-underline"
+          >
+            Inquire →
+          </a>
+          <span
+            class="sm:hidden text-maison-mist dark:text-dark-border group-hover:text-accent transition-colors duration-250"
+            >→</span
+          >
+        </div>
+      </article>
+    }
+  </div>
+}

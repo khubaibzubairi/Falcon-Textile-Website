@@ -1,1 +1,94 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* ── Scrollbar — Webkit (Chrome, Safari, Edge) ────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2EFE9; /* maison-cream */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C8C2B8; /* maison-mist */
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B89A6A; /* accent */
+}
+
+::-webkit-scrollbar-corner {
+  background: #F2EFE9;
+}
+
+/* ── Dark mode scrollbar ──────────────────────────────────────────────────── */
+.dark ::-webkit-scrollbar-track {
+  background: #1A1916; /* dark-surface */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #3A3834; /* dark-border */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #B89A6A; /* accent */
+}
+
+.dark ::-webkit-scrollbar-corner {
+  background: #1A1916;
+}
+
+/* ── Firefox ──────────────────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #C8C2B8 #F2EFE9;
+}
+
+.dark * {
+  scrollbar-color: #3A3834 #1A1916;
+}
+
+/* ── Hide scrollbar utility (keep scroll, hide bar) ──────────────────────── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+.p-drawer-mask {
+  z-index: 69 !important;
+}

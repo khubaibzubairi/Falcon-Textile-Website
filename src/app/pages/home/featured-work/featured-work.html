@@ -1,0 +1,116 @@
+<section class="bg-maison-white dark:bg-dark-base transition-colors duration-400 ease-luxe">
+  <!-- ── Header ────────────────────────────────────────────────────────── -->
+  <div
+    class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 sm:gap-0 px-5 py-8 md:px-12 md:py-12 border-b border-maison-stone dark:border-dark-border"
+  >
+    <div>
+      <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-3 md:mb-4">
+        Featured Work
+      </p>
+      <h2
+        class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-3xl md:text-5xl"
+        data-aos="fade-right"
+      >
+        Pieces worth<br />
+        <em class="italic text-accent font-[serif]">talking about</em>
+      </h2>
+    </div>
+    <button
+      class="group flex items-center gap-2 self-start sm:self-auto sm:mb-2 font-sans text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 ease-luxe bg-transparent border-none p-0 cursor-pointer"
+    >
+      View all pieces
+      <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+    </button>
+  </div>
+
+  <!-- ── Product Grid ───────────────────────────────────────────────────── -->
+  <!--
+    Mobile:  2 columns
+    Tablet:  2 columns
+    Desktop: 4 columns
+  -->
+  <div
+    class="grid sm:grid-cols-2 md:grid-cols-4 border-b border-maison-stone dark:border-dark-border"
+  >
+    @for (product of products; track product.id; let i = $index; let last = $last) {
+      <article
+        class="group relative flex flex-col cursor-pointer border-maison-stone dark:border-dark-border transition-colors duration-250 ease-luxe"
+        [class.border-r]="i % 2 === 0"
+        [class.lg:border-r]="!last"
+        [class.lg:border-r-0]="last"
+        [class.border-b]="i < products.length - 2"
+        [class.lg:border-b-0]="true"
+        (mouseenter)="onMouseEnter(product)"
+        (mouseleave)="onMouseLeave(product)"
+      >
+        <!-- Image Container -->
+        <div class="relative overflow-hidden aspect-[3/4] bg-maison-cream dark:bg-dark-surface">
+          <!-- Primary Image -->
+          <img
+            [src]="product.primaryImage"
+            [alt]="product.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-0]="product.isHovered"
+            [class.opacity-100]="!product.isHovered"
+          />
+
+          <!-- Hover Image -->
+          <img
+            [src]="product.hoverImage"
+            [alt]="product.name + ' alternate view'"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-100]="product.isHovered"
+            [class.opacity-0]="!product.isHovered"
+          />
+
+          <!-- Badge -->
+          @if (product.tag) {
+            <span
+              class="absolute top-3 left-3 md:top-4 md:left-4 font-mono text-2xs tracking-widest uppercase px-2 py-1 md:px-3 md:py-1.5 bg-maison-white dark:bg-dark-surface text-maison-ink dark:text-dark-primary z-raised"
+              >{{ product.tag }}</span
+            >
+          }
+
+          <!-- Inquire overlay — slide up on hover (desktop only) -->
+          <div
+            class="hidden md:flex absolute inset-x-0 bottom-0 items-center justify-center py-4 bg-maison-black/80 translate-y-full transition-transform duration-350 ease-luxe group-hover:translate-y-0"
+          >
+            <span class="font-mono text-2xs tracking-ultra uppercase text-maison-white">
+              Inquire About This Piece
+            </span>
+          </div>
+        </div>
+
+        <!-- Product Info -->
+        <div
+          class="flex flex-col gap-1 flex-1 md:gap-1.5 px-3 py-4 md:px-5 md:py-5 border-t border-maison-stone dark:border-dark-border bg-maison-white dark:bg-dark-base transition-colors duration-250 ease-luxe group-hover:bg-maison-cream dark:group-hover:bg-dark-surface"
+        >
+          <p
+            class="font-mono text-2xs tracking-wider uppercase text-maison-mist dark:text-dark-muted"
+          >
+            {{ product.category }}
+          </p>
+          <h3
+            class="font-display font-light text-lg md:text-xl tracking-tight text-maison-ink dark:text-dark-heading leading-tight"
+          >
+            {{ product.name }}
+          </h3>
+          <p
+            class="font-sans text-xs leading-relaxed text-maison-ash dark:text-dark-muted mt-0.5 hidden sm:block"
+          >
+            {{ product.description }}
+          </p>
+
+          <!-- Mobile inquire link -->
+          <p class="font-mono text-2xs tracking-wider uppercase text-accent mt-1 md:hidden">
+            Inquire →
+          </p>
+
+          <div
+            class="mt-2 md:mt-3 h-px bg-maison-stone dark:bg-dark-border transition-all duration-400 ease-luxe group-hover:bg-accent"
+          ></div>
+        </div>
+      </article>
+    }
+  </div>
+</section>

@@ -1,0 +1,165 @@
+<section class="bg-maison-white dark:bg-dark-base transition-colors duration-400 ease-luxe">
+  <!-- ── Section Header ──────────────────────────────────────────────────── -->
+  <div class="px-5 py-12 md:px-12 md:py-16 border-b border-maison-stone dark:border-dark-border">
+    <div class="max-w-screen-xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-0">
+        <div>
+          <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-4">
+            Why Work With Us
+          </p>
+          <h2
+            class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-6xl"
+          >
+            A partner that<br />
+            <em class="italic text-accent font-[serif]">delivers on every promise</em>
+          </h2>
+        </div>
+
+        <!-- CTA — right aligned on desktop -->
+        <a
+          href="#contact"
+          class="group inline-flex items-center gap-3 self-start md:self-auto bg-maison-black dark:bg-dark-heading text-maison-white dark:text-dark-base px-7 py-3.5 md:mb-2 font-sans text-xs tracking-wider uppercase hover:bg-accent transition-colors duration-250 ease-luxe no-underline"
+        >
+          Start a Conversation
+          <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats Bar ────────────────────────────────────────────────────────── -->
+  <div
+    class="grid grid-cols-2 md:grid-cols-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+  >
+    @for (stat of stats; track stat.label; let i = $index; let last = $last) {
+      <div
+        class="flex flex-col justify-center px-5 py-8 md:px-10 md:py-10 border-maison-stone dark:border-dark-border transition-colors duration-250 ease-luxe hover:bg-maison-stone/40 dark:hover:bg-dark-elevated"
+        [class.border-r]="i % 2 === 0"
+        [class.md:border-r]="!last"
+        [class.md:border-r-0]="last"
+        [class.border-b]="i < 2"
+        [class.md:border-b-0]="true"
+      >
+        <p
+          class="font-display font-light leading-none text-4xl md:text-5xl text-maison-ink dark:text-dark-heading mb-1"
+        >
+          @if (!stat.animation) {
+            {{ stat.number.value }} {{ stat.number.prefix }}
+          } @else {
+            @defer (on viewport) {
+              <div class="flex gap-2">
+                <om-number-ticker [countTo]="stat.number.value"></om-number-ticker
+                >{{ stat.number.prefix }}
+              </div>
+            } @placeholder {
+              <span>{{ stat.number.value }}</span>
+            }
+          }
+        </p>
+        <p class="font-sans text-sm text-maison-charcoal dark:text-dark-primary mt-1">
+          {{ stat.label }}
+        </p>
+        <p
+          class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mt-1"
+        >
+          {{ stat.sub }}
+        </p>
+      </div>
+    }
+  </div>
+
+  <!-- ── Value Props Grid ─────────────────────────────────────────────────── -->
+  <!--
+    Mobile:  1 column stacked
+    Tablet:  2 columns
+    Desktop: 3 columns
+  -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    @for (prop of valueProps; track prop.number; let i = $index; let last = $last) {
+      <div
+        class="group relative px-5 py-10 md:px-10 md:py-12 border-b border-maison-stone dark:border-dark-border hover:bg-maison-cream dark:hover:bg-dark-surface transition-colors duration-300 ease-luxe cursor-default"
+        [class.sm:border-r]="i % 2 === 0"
+        [class.lg:border-r]="(i + 1) % 3 !== 0"
+        [class.lg:border-r-0]="(i + 1) % 3 === 0"
+        [class.lg:border-b]="i < 3"
+        [class.lg:border-b-0]="i >= 3"
+      >
+        <!-- Top row: number + icon -->
+        <div class="flex items-start justify-between mb-6 md:mb-8">
+          <!-- Number -->
+          <span
+            class="font-mono text-2xs tracking-ultra uppercase text-maison-mist dark:text-dark-border transition-colors duration-250 group-hover:text-accent"
+          >
+            {{ prop.number }}
+          </span>
+
+          <!-- Icon -->
+          <div
+            class="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center border border-maison-stone dark:border-dark-border text-maison-charcoal dark:text-dark-secondary transition-all duration-300 ease-luxe group-hover:border-accent group-hover:text-accent"
+          >
+            <svg
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path [attr.d]="prop.icon" />
+            </svg>
+          </div>
+        </div>
+
+        <!-- Animated divider -->
+        <div
+          class="w-8 h-px bg-maison-stone dark:bg-dark-border mb-5 transition-all duration-400 ease-luxe group-hover:w-14 group-hover:bg-accent"
+        ></div>
+
+        <!-- Title -->
+        <h3
+          class="font-display font-light tracking-tight leading-snug text-xl md:text-2xl text-maison-ink dark:text-dark-heading mb-3"
+        >
+          {{ prop.title }}
+        </h3>
+
+        <!-- Body -->
+        <p class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted">
+          {{ prop.body }}
+        </p>
+      </div>
+    }
+  </div>
+
+  <!-- ── Bottom CTA Banner ────────────────────────────────────────────────── -->
+  <div
+    class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0 px-5 py-12 md:px-12 md:py-16 border-t border-maison-stone dark:border-dark-border bg-maison-ink dark:bg-dark-elevated transition-colors duration-400 ease-luxe"
+  >
+    <div>
+      <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-3">
+        Ready to collaborate?
+      </p>
+      <h3
+        class="font-display font-light leading-none tracking-tightest text-maison-white dark:text-dark-heading text-3xl md:text-4xl"
+      >
+        Let's build something<br class="hidden md:block" />
+        <em class="italic text-accent">worth wearing.</em>
+      </h3>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-4">
+      <a
+        href="#contact"
+        class="inline-flex items-center justify-center px-8 py-3.5 bg-accent hover:bg-accent-light text-maison-white font-sans text-xs tracking-wider uppercase transition-colors duration-250 ease-luxe no-underline"
+      >
+        Send an Inquiry
+      </a>
+      <a
+        href="#lookbook"
+        class="inline-flex items-center justify-center px-8 py-3.5 border border-maison-white/30 hover:border-maison-white/60 text-maison-white font-sans text-xs tracking-wider uppercase transition-colors duration-250 ease-luxe no-underline"
+      >
+        View Lookbook
+      </a>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,124 @@
+<section class="bg-maison-white dark:bg-dark-elevated transition-colors duration-400 ease-luxe">
+  <!-- ── TOP: Full-width intro row ──────────────────────────────────────── -->
+  <div class="grid md:grid-cols-2 border-b border-maison-stone dark:border-dark-border">
+    <!-- Left — large editorial image -->
+    <div class="relative overflow-hidden group bg-red-200 h-full">
+      <img
+        src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=900&q=80"
+        alt="Behind the scenes — atelier"
+        class="w-full h-full object-cover grayscale-[10%] transition-transform duration-[800ms] ease-luxe group-hover:scale-[1.03]"
+      />
+
+      <!-- Floating year badge -->
+      <div
+        class="absolute top-8 left-8 border border-maison-white/60 px-4 py-2 backdrop-blur-sm bg-maison-black/20"
+      >
+        <p class="font-mono text-2xs tracking-ultra uppercase text-maison-white">
+          Est. {{ foundedYear }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Right — brand intro text -->
+    <div
+      class="flex flex-col justify-between px-14 py-16 border-l border-maison-stone dark:border-dark-border"
+    >
+      <div>
+        <!-- Eyebrow -->
+        <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-8">Our Story</p>
+
+        <!-- Headline -->
+        <h2
+          class="font-display font-medium text-5xl leading-none tracking-tightest text-maison-black dark:text-dark-heading mb-8"
+          data-aos="fade"
+        >
+          Built on the belief that<br />
+          <em class="italic text-accent font-[serif]">clothes should mean something</em>
+        </h2>
+
+        <!-- Body -->
+        <p
+          class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted max-w-[48ch] mb-6"
+        >
+          MAISON was founded in {{ foundedYear }} with a single conviction — that the fashion
+          industry needed less noise and more intention. We set out to build a label where every
+          decision, from thread weight to hang tag, is made deliberately.
+        </p>
+
+        <p
+          class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted max-w-[48ch]"
+        >
+          Today we partner with select retailers, stylists, and creative directors who share that
+          same belief. If you're looking for a brand that stands for something — we'd like to meet
+          you.
+        </p>
+      </div>
+
+      <!-- Signature + CTA -->
+      <div class="flex items-end justify-between mt-12">
+        <!-- Founder signature style -->
+        <div>
+          <p
+            class="font-display italic font-bold text-2xl text-maison-ink dark:text-dark-primary leading-none mb-1"
+          >
+            Sofia Laurent
+          </p>
+          <p
+            class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted"
+          >
+            Founder & Creative Director
+          </p>
+        </div>
+
+        <!-- CTA -->
+        <button
+          class="group flex items-center gap-2 font-sans text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent transition-colors duration-250 ease-luxe bg-transparent border-none p-0 cursor-pointer"
+        >
+          Read full story
+          <span class="transition-transform duration-250 ease-luxe group-hover:translate-x-1"
+            >→</span
+          >
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOTTOM: Three pillars row ──────────────────────────────────────── -->
+  <div class="grid sm:grid-cols-2 md:grid-cols-3">
+    @for (pillar of pillars; track pillar.number; let last = $last) {
+      <div
+        class="px-12 py-14 border-b border-maison-stone dark:border-dark-border transition-colors duration-250 ease-luxe hover:bg-maison-cream dark:hover:bg-dark-surface group"
+        [class.border-r]="!last"
+        [class.border-r-maison-stone]="!last"
+        [class.dark:border-r-dark-border]="!last"
+        data-aos="fade"
+      >
+        <!-- Number -->
+        <p
+          class="font-mono text-base tracking-ultra uppercase text-maison-mist dark:text-dark-border mb-3 transition-colors duration-250 group-hover:text-accent"
+        >
+          {{ pillar.number }}
+        </p>
+
+        <!-- Divider line -->
+        <div
+          class="w-8 h-px bg-maison-stone dark:bg-dark-border mb-6 transition-all duration-400 ease-luxe group-hover:w-16 group-hover:bg-accent"
+        ></div>
+
+        <!-- Title -->
+        <h3
+          class="font-display font-semibold text-2xl tracking-tight text-maison-ink dark:text-dark-heading mb-4"
+        >
+          {{ pillar.title }}
+        </h3>
+
+        <!-- Body -->
+        <p
+          class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted max-w-[32ch]"
+        >
+          {{ pillar.body }}
+        </p>
+      </div>
+    }
+  </div>
+</section>

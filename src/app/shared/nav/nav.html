@@ -1,0 +1,339 @@
+<!-- ── NAV BAR ──────────────────────────────────────────────────────────────── -->
+<nav
+  class="relative flex items-center justify-between px-6 sm:px-10 lg:px-12 py-3 border-b border-maison-stone dark:border-dark-border bg-maison-white/90 dark:bg-dark-base/90 backdrop-blur-md transition-colors duration-400 ease-luxe w-full"
+>
+  <!-- Logo -->
+  <a routerLink="/" class="w-32 dark:bg-white p-2 rounded-md">
+    <img src="/assets/images/logo.png" alt="" />
+  </a>
+
+  <!-- Desktop Nav Links -->
+  <ul class="hidden lg:flex items-center gap-1 list-none m-0 p-0">
+    @for (link of links; track link.label) {
+      <li
+        class="relative"
+        (mouseenter)="link.hasMega ? openMega() : null"
+        (mouseleave)="link.hasMega ? closeMega() : null"
+      >
+        @if (link.hasMega) {
+          <a
+            class="flex items-center gap-1.5 px-4 py-2 text-xs tracking-wider uppercase transition-colors duration-250 ease-luxe cursor-pointer bg-transparent border-none rounded-md"
+            [routerLink]="[link.route]"
+            routerLinkActive="!text-white !dark:bg-gradient-gold !bg-gradient-gold-dark !shadow-md"
+            [class.text-accent]="megaOpen()"
+            [class.text-maison-charcoal]="!megaOpen()"
+            [class.dark:text-dark-secondary]="!megaOpen()"
+          >
+            {{ link.label }}
+            <svg
+              class="w-3 h-3 transition-transform duration-250"
+              [class.rotate-180]="megaOpen()"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </a>
+
+          <!-- Mega Menu -->
+          @if (megaOpen()) {
+            <div
+              class="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-[1000px] bg-maison-white dark:bg-dark-surface border border-maison-stone overflow-hidden dark:border-dark-border shadow-luxe-lg z-modal"
+              (mouseenter)="openMega()"
+              (mouseleave)="closeMega()"
+            >
+              <!-- Mega header -->
+              <div
+                class="flex items-center justify-between px-8 py-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-elevated"
+              >
+                <p
+                  class="font-mono text-xs tracking-ultra uppercase text-maison-ash dark:text-dark-secondary"
+                >
+                  Products & Services
+                </p>
+                <a
+                  [routerLink]="['/products']"
+                  (click)="closeMega()"
+                  class="font-mono text-xs tracking-wider uppercase text-accent hover:text-accent-light transition-colors duration-250 no-underline flex items-center gap-1.5"
+                >
+                  View all →
+                </a>
+              </div>
+
+              <!-- Mega grid -->
+              <div class="overflow-auto">
+                @for (cat of megaCategories; track cat.label) {
+                  <div class="px-6 py-3 w-full">
+                    <!-- <p
+                      class="font-mono text-xs tracking-ultra uppercase text-accent mb-4 border-b dark:border-dark-muted pb-2"
+                    >
+                      {{ cat.label }}
+                    </p> -->
+                    <ul class="columns-3 m-0 p-0">
+                      @for (item of cat.items; track item.label) {
+                        <li class="break-before-all flex gap-2 py-1">
+                          <span class="material-symbols-outlined !text-xs mt-1">
+                            arrow_circle_right
+                          </span>
+                          <button
+                            (click)="navigateToCategory(item.label)"
+                            class="flex items-center justify-between font-sans text-sm text-maison-charcoal dark:text-dark-primary hover:text-accent dark:hover:text-accent transition-colors duration-200 bg-transparent border-none cursor-pointer text-left p-0 group/item"
+                          >
+                            <span
+                              class="group-hover/item:translate-x-0.5 transition-transform duration-200"
+                            >
+                              {{ item.label }}
+                            </span>
+                          </button>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
+              </div>
+
+              <!-- Mega footer -->
+              <div
+                class="px-8 py-4 border-t border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-elevated flex items-center gap-6"
+              >
+                <a
+                  routerLink="/contact"
+                  [queryParams]="{ type: 'wholesale' }"
+                  (click)="closeMega()"
+                  class="font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 no-underline"
+                >
+                  Wholesale Enquiry
+                </a>
+                <span class="w-px h-3 bg-maison-stone dark:bg-dark-border"></span>
+                <a
+                  routerLink="/contact"
+                  [queryParams]="{ type: 'custom' }"
+                  (click)="closeMega()"
+                  class="font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 no-underline"
+                >
+                  Custom Order
+                </a>
+                <span class="w-px h-3 bg-maison-stone dark:bg-dark-border"></span>
+                <a
+                  routerLink="/contact"
+                  [queryParams]="{ type: 'private-label' }"
+                  (click)="closeMega()"
+                  class="font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 no-underline"
+                >
+                  Private Label
+                </a>
+              </div>
+            </div>
+          }
+        } @else {
+          <a
+            [routerLink]="link.route"
+            routerLinkActive="!text-white !dark:bg-gradient-gold !bg-gradient-gold-dark !shadow-md"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="block px-4 py-2 text-xs tracking-wider uppercase rounded-md text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent transition-colors duration-250 ease-luxe no-underline"
+          >
+            {{ link.label }}
+          </a>
+        }
+      </li>
+    }
+  </ul>
+
+  <!-- Actions -->
+  <div class="flex items-center gap-1">
+    <!-- Search -->
+    <button
+      class="p-2 text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent hover:bg-maison-cream dark:hover:bg-dark-surface transition-all duration-250 rounded-none"
+      aria-label="Search"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="11" cy="11" r="8" />
+        <path d="m21 21-4.35-4.35" />
+      </svg>
+    </button>
+
+    <!-- Wishlist -->
+    <button
+      class="p-2 text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent hover:bg-maison-cream dark:hover:bg-dark-surface transition-all duration-250 rounded-none"
+      aria-label="Wishlist"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path
+          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+        />
+      </svg>
+    </button>
+
+    <!-- Theme toggle -->
+    <button
+      (click)="theme.toggle()"
+      class="p-2 text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent hover:bg-maison-cream dark:hover:bg-dark-surface transition-all duration-250 rounded-none"
+      [attr.aria-label]="theme.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+    >
+      @if (theme.isDark()) {
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"
+          />
+        </svg>
+      } @else {
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+        </svg>
+      }
+    </button>
+
+    <!-- Divider -->
+    <span class="hidden lg:block w-px h-5 bg-maison-stone dark:bg-dark-border mx-1"></span>
+
+    <!-- Inquire CTA — desktop -->
+    <a
+      routerLink="/contact"
+      class="hidden lg:inline-flex items-center gap-2 px-5 py-2 bg-maison-black dark:bg-dark-heading text-maison-white dark:text-dark-base font-mono text-2xs tracking-wider uppercase hover:bg-accent transition-colors duration-250 ease-luxe no-underline"
+    >
+      Inquire
+    </a>
+
+    <!-- Hamburger (mobile only) -->
+    <button
+      class="lg:hidden p-2 text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250"
+      aria-label="Toggle menu"
+      (click)="drawerVisible = true"
+    >
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ── MOBILE DRAWER ─────────────────────────────────────────────────────────── -->
+<p-drawer
+  [(visible)]="drawerVisible"
+  position="left"
+  [style]="{ width: '300px' }"
+  styleClass="!bg-maison-white dark:!bg-dark-base !border-r !border-maison-stone dark:!border-dark-border"
+>
+  <ng-template #header>
+    <div class="flex items-center gap-3">
+      <span class="font-mono text-xl tracking-ultra text-maison-black dark:text-dark-heading"
+        >MAISON</span
+      >
+      <span class="w-px h-4 bg-maison-stone dark:bg-dark-border"></span>
+      <span class="font-sans text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted"
+        >Atelier</span
+      >
+    </div>
+  </ng-template>
+
+  <div class="flex flex-col h-full">
+    <ul class="flex flex-col list-none m-0 p-0 mt-2">
+      @for (link of links; track link.label) {
+        <li class="border-b border-maison-stone dark:border-dark-border">
+          @if (link.hasMega) {
+            <!-- Accordion trigger -->
+            <button
+              (click)="mobileProductsOpen.set(!mobileProductsOpen())"
+              class="w-full flex items-center justify-between px-2 py-4 text-xs tracking-wider uppercase bg-transparent border-none cursor-pointer transition-colors duration-250"
+              [class.text-accent]="mobileProductsOpen()"
+              [class.text-maison-charcoal]="!mobileProductsOpen()"
+              [class.dark:text-dark-secondary]="!mobileProductsOpen()"
+            >
+              {{ link.label }}
+              <svg
+                class="w-3.5 h-3.5 transition-transform duration-250"
+                [class.rotate-180]="mobileProductsOpen()"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+
+            <!-- Accordion content -->
+            <div
+              class="overflow-y-auto transition-all duration-400 ease-luxe"
+              [class.max-h-0]="!mobileProductsOpen()"
+              [class.max-h-[600px]]="mobileProductsOpen()"
+            >
+              <div class="bg-maison-cream dark:bg-dark-surface pb-2">
+                @for (cat of megaCategories; track cat.label) {
+                  <div class="px-4 pt-4 pb-2">
+                    <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-2">
+                      {{ cat.label }}
+                    </p>
+                    <ul class="">
+                      @for (item of cat.items; track item.label) {
+                        <li class="">
+                          <button
+                            (click)="
+                              navigateToCategory(item.label);
+                              drawerVisible = false;
+                              mobileProductsOpen.set(false)
+                            "
+                            class="flex items-center justify-between py-2 font-sans text-sm text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-200 bg-transparent border-none cursor-pointer text-left w-full p-0"
+                          >
+                            {{ item.label }}
+                          </button>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
+                <div
+                  class="px-4 pt-3 pb-3 border-t border-maison-stone dark:border-dark-border mt-2"
+                >
+                  <a
+                    routerLink="/products"
+                    (click)="drawerVisible = false; mobileProductsOpen.set(false)"
+                    class="font-mono text-2xs tracking-wider uppercase text-accent no-underline flex items-center gap-1.5"
+                  >
+                    View all products →
+                  </a>
+                </div>
+              </div>
+            </div>
+          } @else {
+            <a
+              [routerLink]="link.route"
+              routerLinkActive="!text-accent"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="drawerVisible = false"
+              class="block px-2 py-4 text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 ease-luxe no-underline"
+            >
+              {{ link.label }}
+            </a>
+          }
+        </li>
+      }
+    </ul>
+
+    <!-- Mobile drawer footer -->
+    <div class="mt-auto px-2 py-6 border-t border-maison-stone dark:border-dark-border">
+      <a
+        routerLink="/contact"
+        (click)="drawerVisible = false"
+        class="flex items-center justify-center gap-2 py-3.5 bg-maison-black dark:bg-dark-heading text-maison-white dark:text-dark-base font-mono text-2xs tracking-wider uppercase hover:bg-accent transition-colors duration-250 no-underline"
+      >
+        Start an Enquiry →
+      </a>
+    </div>
+  </div>
+</p-drawer>

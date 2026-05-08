@@ -1,0 +1,241 @@
+<section
+  id="lookbook"
+  class="bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe overflow-hidden"
+>
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <div
+    class="flex flex-col sm:flex-row sm:items-end sm:justify-between px-6 pt-16 pb-10 md:px-16 md:pt-20 md:pb-12"
+  >
+    <div>
+      <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-4">Lookbook</p>
+      <h2
+        class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-5xl md:text-7xl"
+      >
+        The work,<br />
+        <em class="italic text-accent font-[serif]">in its best light</em>
+      </h2>
+    </div>
+    <div class="flex flex-col sm:items-end gap-3 mt-6 sm:mt-0 sm:mb-2">
+      <p
+        class="font-sans text-sm text-maison-ash dark:text-dark-muted max-w-[32ch] sm:text-right leading-relaxed"
+      >
+        SS 2025 &amp; AW 2024 collections.<br class="hidden sm:block" />
+        Drag or scroll to explore.
+      </p>
+      <button
+        (click)="openLightbox(0)"
+        class="group self-start sm:self-auto flex items-center gap-2 font-sans text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 ease-luxe bg-transparent border-none p-0 cursor-pointer"
+      >
+        Open Gallery
+        <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Film Strip ───────────────────────────────────────────────────────── -->
+  <div
+    #strip
+    class="film-strip flex gap-0 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing select-none border-t border-maison-stone dark:border-dark-border"
+  >
+    @for (img of images; track img.id; let i = $index) {
+      <div
+        class="film-item flex-shrink-0 flex flex-col border-r border-maison-stone dark:border-dark-border last:border-r-0"
+        [class.film-item--wide]="img.span === 'wide'"
+        [class.film-item--tall]="img.span === 'tall'"
+      >
+        <!-- Image -->
+        <div
+          class="relative overflow-hidden film-image cursor-pointer group"
+          (click)="openLightbox(i)"
+        >
+          <img
+            [src]="img.thumb"
+            [alt]="img.alt"
+            class="w-full h-full object-cover transition-transform duration-700 ease-luxe group-hover:scale-[1.03]"
+            draggable="false"
+          />
+          <!-- Index number watermark -->
+          <span
+            class="absolute top-4 left-4 font-mono text-2xs tracking-ultra text-maison-white/30"
+          >
+            {{ (i + 1).toString().padStart(2, '0') }}
+          </span>
+          <!-- Expand hint -->
+          <div
+            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-350 ease-luxe"
+          >
+            <span
+              class="w-10 h-10 border border-maison-white/60 flex items-center justify-center text-maison-white/80 text-xs"
+              >↗</span
+            >
+          </div>
+        </div>
+
+        <!-- Caption panel -->
+        <div
+          class="px-5 py-5 border-t border-maison-stone dark:border-dark-border bg-maison-white dark:bg-dark-base flex flex-col gap-1 flex-1"
+        >
+          <p class="font-mono text-2xs tracking-ultra uppercase text-accent">{{ img.season }}</p>
+          <p
+            class="font-display font-light text-xl text-maison-ink dark:text-dark-primary leading-tight mt-1"
+          >
+            {{ img.caption }}
+          </p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- ── Footer row ───────────────────────────────────────────────────────── -->
+  <div
+    class="flex items-center justify-between px-6 py-8 md:px-16 border-t border-maison-stone dark:border-dark-border"
+  >
+    <span class="font-mono text-2xs tracking-ultra uppercase text-maison-mist dark:text-dark-muted">
+      {{ images.length }} pieces
+    </span>
+
+    <!-- Strip navigation -->
+    <div class="flex items-center gap-0">
+      <button
+        (click)="scrollStrip('prev')"
+        class="w-11 h-11 flex items-center justify-center border border-maison-mist dark:border-dark-border text-maison-charcoal dark:text-dark-secondary hover:bg-maison-black hover:text-maison-white hover:border-maison-black dark:hover:bg-dark-heading dark:hover:text-dark-base transition-all duration-250 ease-luxe bg-maison-stone dark:bg-dark-base cursor-pointer"
+        aria-label="Scroll left"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <button
+        (click)="scrollStrip('next')"
+        class="w-11 h-11 flex items-center justify-center border border-l-0 border-maison-mist dark:border-dark-border text-maison-charcoal dark:text-dark-secondary hover:bg-maison-black hover:text-maison-white hover:border-maison-black dark:hover:bg-dark-heading dark:hover:text-dark-base transition-all duration-250 ease-luxe bg-maison-stone dark:bg-dark-base cursor-pointer"
+        aria-label="Scroll right"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+
+    <button
+      (click)="openLightbox(0)"
+      class="group flex items-center gap-3 font-sans text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 ease-luxe bg-transparent border-none p-0 cursor-pointer"
+    >
+      View all
+      <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+    </button>
+  </div>
+</section>
+
+<!-- ── LIGHTBOX ─────────────────────────────────────────────────────────── -->
+@if (lightboxOpen) {
+  <div
+    class="fixed inset-0 z-modal bg-maison-black/95 backdrop-blur-sm flex flex-col"
+    (click)="closeLightbox()"
+  >
+    <div
+      class="flex items-center justify-between px-5 py-4 md:px-8 md:py-5 border-b border-maison-white/10 flex-shrink-0"
+      (click)="$event.stopPropagation()"
+    >
+      <div>
+        <span class="font-mono text-2xs tracking-ultra uppercase text-accent">{{
+          activeImage.season
+        }}</span>
+        <p class="font-display font-light text-lg md:text-2xl text-maison-white mt-0.5">
+          {{ activeImage.caption }}
+        </p>
+      </div>
+      <div class="flex items-center gap-4 md:gap-6">
+        <span class="font-mono text-2xs tracking-wider text-maison-white/40"
+          >{{ activeIndex + 1 }} / {{ images.length }}</span
+        >
+        <button
+          (click)="closeLightbox()"
+          class="w-9 h-9 flex items-center justify-center border border-maison-white/20 text-maison-white/70 hover:text-maison-white hover:border-maison-white/50 transition-colors duration-250 bg-transparent cursor-pointer"
+          aria-label="Close"
+        >
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M18 6 6 18M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div
+      class="flex-1 flex items-center justify-center relative px-4 py-4 md:px-16 min-h-0"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        (click)="prev()"
+        class="absolute left-3 md:left-6 z-raised w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-maison-white/20 text-maison-white/70 hover:text-maison-white hover:border-maison-white/50 transition-colors duration-250 bg-transparent cursor-pointer"
+        aria-label="Previous"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+      </button>
+      <img
+        [src]="activeImage.src"
+        [alt]="activeImage.alt"
+        class="max-h-full max-w-full object-contain"
+        style="max-height: calc(100vh - 180px)"
+      />
+      <button
+        (click)="next()"
+        class="absolute right-3 md:right-6 z-raised w-10 h-10 md:w-12 md:h-12 flex items-center justify-center border border-maison-white/20 text-maison-white/70 hover:text-maison-white hover:border-maison-white/50 transition-colors duration-250 bg-transparent cursor-pointer"
+        aria-label="Next"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+
+    <div
+      class="flex items-center gap-2 md:gap-3 px-5 py-4 md:px-8 border-t border-maison-white/10 overflow-x-auto flex-shrink-0 scrollbar-hide"
+      (click)="$event.stopPropagation()"
+    >
+      @for (img of images; track img.id; let i = $index) {
+        <button
+          (click)="goTo(i)"
+          class="relative flex-shrink-0 w-12 h-12 md:w-16 md:h-16 overflow-hidden border transition-all duration-250 ease-luxe cursor-pointer bg-transparent p-0"
+          [class.border-accent]="i === activeIndex"
+          [class.border-maison-white/20]="i !== activeIndex"
+          [class.opacity-40]="i !== activeIndex"
+          [attr.aria-label]="'Go to image ' + (i + 1)"
+        >
+          <img [src]="img.thumb" [alt]="img.alt" class="w-full h-full object-cover" />
+        </button>
+      }
+    </div>
+  </div>
+}

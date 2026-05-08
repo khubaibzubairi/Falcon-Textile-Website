@@ -1,0 +1,541 @@
+<div class="bg-maison-white dark:bg-dark-base transition-colors duration-400 ease-luxe">
+  <!-- ── HERO BANNER ─────────────────────────────────────────────────────── -->
+  <div class="relative overflow-hidden min-h-[40vh] md:min-h-[52vh] flex flex-col justify-end">
+    <!-- Background image -->
+    <img
+      src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=85"
+      alt="MAISON atelier"
+      class="absolute inset-0 w-full h-full object-cover object-top grayscale-[20%]"
+    />
+
+    <!-- Dark gradient overlay -->
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-maison-black via-maison-black/50 to-transparent"
+    ></div>
+
+    <!-- Hero text -->
+    <div class="relative z-raised px-5 pb-12 md:px-16 md:pb-16 py-3 sm:py-5 md:py-8 lg:py-10">
+      <p class="font-mono text-base tracking-ultra uppercase text-accent mb-4">Get in Touch</p>
+      <h1
+        class="font-display font-medium leading-none tracking-tightest text-maison-white text-5xl md:text-8xl mb-4"
+      >
+        Start a<br />
+        <em class="italic text-accent font-[serif]">conversation</em>
+      </h1>
+      <p class="font-sans text-sm md:text-base leading-relaxed text-maison-white/60 max-w-[46ch]">
+        We respond to every serious inquiry within one business day. No auto-replies, no holding
+        queues — a real person will read this.
+      </p>
+    </div>
+  </div>
+
+  <!-- ── CONTACT INFO STRIP ──────────────────────────────────────────────── -->
+  <div
+    class="grid grid-cols-2 lg:grid-cols-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+  >
+    @for (info of contactInfo; track info.label; let i = $index; let last = $last) {
+      <div
+        class="group flex items-start gap-3 px-5 py-6 md:px-8 md:py-8 border-maison-stone dark:border-dark-border hover:bg-maison-stone/30 dark:hover:bg-dark-elevated transition-colors duration-250 ease-luxe"
+        [class.border-r]="i % 2 === 0"
+        [class.lg:border-r]="!last"
+        [class.lg:border-r-0]="last"
+        [class.border-b]="i < 2"
+        [class.lg:border-b-0]="true"
+      >
+        <!-- Icon -->
+        <div
+          class="w-9 h-9 flex-shrink-0 flex items-center justify-center border border-maison-stone dark:border-dark-border text-maison-charcoal dark:text-dark-secondary transition-all duration-250 group-hover:border-accent group-hover:text-accent"
+        >
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          >
+            <path [attr.d]="info.icon" />
+          </svg>
+        </div>
+        <div>
+          <p
+            class="font-mono text-2xs tracking-wider uppercase text-maison-mist dark:text-dark-muted mb-1"
+          >
+            {{ info.label }}
+          </p>
+          @if (info.href) {
+            <a
+              [href]="info.href"
+              class="font-sans text-sm text-maison-ink dark:text-dark-primary hover:text-accent transition-colors duration-250 no-underline"
+            >
+              {{ info.value }}
+            </a>
+          } @else {
+            <p class="font-sans text-sm text-maison-ink dark:text-dark-primary">{{ info.value }}</p>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- ── FORM + SIDEBAR ──────────────────────────────────────────────────── -->
+  <div
+    class="flex flex-col lg:grid lg:grid-cols-[1fr_360px] border-b border-maison-stone dark:border-dark-border"
+  >
+    <!-- Form -->
+    <div
+      class="px-5 py-12 md:px-12 md:py-16 border-b lg:border-b-0 lg:border-r bg-maison-white dark:bg-dark-elevated border-maison-stone dark:border-dark-border"
+    >
+      <h2
+        class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-3xl md:text-4xl mb-10"
+      >
+        Send us an inquiry
+      </h2>
+
+      <!-- Success banner -->
+      @if (showSuccess) {
+        <div class="flex items-start gap-4 p-5 mb-8 border border-accent/40 bg-accent/5">
+          <svg
+            class="w-5 h-5 text-accent flex-shrink-0 mt-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+          >
+            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div>
+            <p class="font-sans text-sm font-medium text-maison-ink dark:text-dark-heading mb-0.5">
+              Message received
+            </p>
+            <p class="font-sans text-xs text-maison-ash dark:text-dark-muted">
+              Thank you for reaching out. A member of our team will be in touch within one business
+              day.
+            </p>
+          </div>
+        </div>
+      }
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate class="flex flex-col gap-5">
+        <!-- Row 1: Name + Company -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Full Name <span class="text-accent">*</span>
+            </label>
+            <input
+              type="text"
+              formControlName="name"
+              placeholder="Sofia Laurent"
+              class="w-full px-4 py-3 bg-maison-cream dark:bg-dark-surface border font-sans text-sm text-maison-ink dark:text-dark-primary placeholder:text-maison-mist dark:placeholder:text-dark-muted outline-none transition-colors duration-250 focus:border-accent focus:shadow-accent"
+              [class.border-maison-stone]="!isInvalid('name')"
+              [class.dark:border-dark-border]="!isInvalid('name')"
+              [class.border-red-400]="isInvalid('name')"
+            />
+            @if (isInvalid('name')) {
+              <p class="font-mono text-2xs tracking-wide text-red-400 mt-1.5">
+                Please enter your full name
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Company <span class="text-accent">*</span>
+            </label>
+            <input
+              type="text"
+              formControlName="company"
+              placeholder="Your Brand or Studio"
+              class="w-full px-4 py-3 bg-maison-cream dark:bg-dark-surface border font-sans text-sm text-maison-ink dark:text-dark-primary placeholder:text-maison-mist dark:placeholder:text-dark-muted outline-none transition-colors duration-250 focus:border-accent focus:shadow-accent"
+              [class.border-maison-stone]="!isInvalid('company')"
+              [class.dark:border-dark-border]="!isInvalid('company')"
+              [class.border-red-400]="isInvalid('company')"
+            />
+            @if (isInvalid('company')) {
+              <p class="font-mono text-2xs tracking-wide text-red-400 mt-1.5">
+                Please enter your company name
+              </p>
+            }
+          </div>
+        </div>
+
+        <!-- Row 2: Email + Phone -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Email <span class="text-accent">*</span>
+            </label>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="hello@yourbrand.com"
+              class="w-full px-4 py-3 bg-maison-cream dark:bg-dark-surface border font-sans text-sm text-maison-ink dark:text-dark-primary placeholder:text-maison-mist dark:placeholder:text-dark-muted outline-none transition-colors duration-250 focus:border-accent focus:shadow-accent"
+              [class.border-maison-stone]="!isInvalid('email')"
+              [class.dark:border-dark-border]="!isInvalid('email')"
+              [class.border-red-400]="isInvalid('email')"
+            />
+            @if (isInvalid('email')) {
+              <p class="font-mono text-2xs tracking-wide text-red-400 mt-1.5">
+                Please enter a valid email
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Phone <span class="text-maison-mist dark:text-dark-muted">(optional)</span>
+            </label>
+            <input
+              type="tel"
+              formControlName="phone"
+              placeholder="+44 20 0000 0000"
+              class="w-full px-4 py-3 bg-maison-cream dark:bg-dark-surface border border-maison-stone dark:border-dark-border font-sans text-sm text-maison-ink dark:text-dark-primary placeholder:text-maison-mist dark:placeholder:text-dark-muted outline-none transition-colors duration-250 focus:border-accent"
+            />
+          </div>
+        </div>
+
+        <!-- Row 3: Inquiry Type + Budget -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Inquiry Type <span class="text-accent">*</span>
+            </label>
+            <div class="relative">
+              <select
+                formControlName="inquiryType"
+                class="w-full px-4 py-3 appearance-none bg-maison-cream dark:bg-dark-surface border font-sans text-sm text-maison-ink dark:text-dark-primary outline-none cursor-pointer transition-colors duration-250 focus:border-accent"
+                [class.border-maison-stone]="!isInvalid('inquiryType')"
+                [class.dark:border-dark-border]="!isInvalid('inquiryType')"
+                [class.border-red-400]="isInvalid('inquiryType')"
+              >
+                <option value="" disabled>Select a type</option>
+                @for (type of inquiryTypes; track type) {
+                  <option [value]="type">{{ type }}</option>
+                }
+              </select>
+            </div>
+            @if (isInvalid('inquiryType')) {
+              <p class="font-mono text-2xs tracking-wide text-red-400 mt-1.5">
+                Please select an inquiry type
+              </p>
+            }
+          </div>
+          <div>
+            <label
+              class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+            >
+              Estimated Budget <span class="text-maison-mist dark:text-dark-muted">(optional)</span>
+            </label>
+            <div class="relative">
+              <select
+                formControlName="budget"
+                class="w-full px-4 py-3 appearance-none bg-maison-cream dark:bg-dark-surface border border-maison-stone dark:border-dark-border font-sans text-sm text-maison-ink dark:text-dark-primary outline-none cursor-pointer transition-colors duration-250 focus:border-accent"
+              >
+                <option value="">Prefer not to say</option>
+                @for (range of budgetRanges; track range) {
+                  <option [value]="range">{{ range }}</option>
+                }
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <div>
+          <label
+            class="block font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mb-2"
+          >
+            Message <span class="text-accent">*</span>
+          </label>
+          <textarea
+            formControlName="message"
+            rows="7"
+            placeholder="Tell us about your brand, the type of collection, quantities, timeline, and any fabric or sustainability requirements..."
+            class="w-full px-4 py-3 resize-none bg-maison-cream dark:bg-dark-surface border font-sans text-sm leading-relaxed text-maison-ink dark:text-dark-primary placeholder:text-maison-mist dark:placeholder:text-dark-muted outline-none transition-colors duration-250 focus:border-accent focus:shadow-accent"
+            [class.border-maison-stone]="!isInvalid('message')"
+            [class.dark:border-dark-border]="!isInvalid('message')"
+            [class.border-red-400]="isInvalid('message')"
+          ></textarea>
+          @if (isInvalid('message')) {
+            <p class="font-mono text-2xs tracking-wide text-red-400 mt-1.5">
+              Please enter a message (at least 20 characters)
+            </p>
+          }
+        </div>
+
+        <!-- Submit -->
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <button
+            type="submit"
+            [disabled]="submitting"
+            class="group inline-flex items-center gap-3 w-full sm:w-auto justify-center px-10 py-4 font-sans text-xs tracking-wider uppercase border-none cursor-pointer transition-colors duration-250 ease-luxe disabled:opacity-60 disabled:cursor-not-allowed"
+            [class.bg-maison-black]="!submitting"
+            [class.dark:bg-dark-heading]="!submitting"
+            [class.text-maison-white]="!submitting"
+            [class.dark:text-dark-base]="!submitting"
+            [class.hover:bg-accent]="!submitting"
+            [class.bg-maison-ash]="submitting"
+          >
+            @if (submitting) {
+              <svg
+                class="w-4 h-4 animate-spin"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+              >
+                <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-opacity=".25" />
+                <path d="M21 12a9 9 0 00-9-9" />
+              </svg>
+              Sending...
+            } @else {
+              Send Inquiry
+              <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+            }
+          </button>
+          <p class="font-mono text-2xs tracking-wide text-maison-ash dark:text-dark-muted">
+            We reply within one business day.
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Sidebar -->
+    <div
+      class="px-5 py-12 md:px-10 md:py-16 bg-maison-cream dark:bg-dark-surface flex flex-col gap-10 transition-colors duration-400 ease-luxe"
+    >
+      <!-- Founder note -->
+      <div class="border-l-2 border-accent pl-5">
+        <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-3">
+          A note from the founder
+        </p>
+        <p
+          class="font-display italic font-light text-xl leading-snug text-maison-ink dark:text-dark-primary"
+        >
+          "We take every inquiry seriously. If your brand is a fit, you'll hear from us —
+          personally."
+        </p>
+        <p
+          class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted mt-3"
+        >
+          — Sofia Laurent, Founder
+        </p>
+      </div>
+
+      <div class="h-px bg-maison-stone dark:bg-dark-border"></div>
+
+      <!-- What to expect -->
+      <div>
+        <p
+          class="font-mono text-2xs tracking-ultra uppercase text-maison-ash dark:text-dark-muted mb-6"
+        >
+          What to expect
+        </p>
+        <div class="flex flex-col gap-5">
+          @for (
+            step of [
+              {
+                n: '01',
+                title: 'We read your inquiry',
+                body: 'Every message is read by a real person — no auto-filtering.',
+              },
+              {
+                n: '02',
+                title: 'We respond within 24h',
+                body: "If your project is a fit, you'll hear back within one business day.",
+              },
+              {
+                n: '03',
+                title: 'Discovery call',
+                body: 'A 30-minute call to understand your brand and align on direction.',
+              },
+              {
+                n: '04',
+                title: 'Proposal & timeline',
+                body: 'A detailed quote and production timeline within 3 business days.',
+              },
+            ];
+            track step.n
+          ) {
+            <div class="flex items-start gap-4 group">
+              <span
+                class="font-mono text-2xs tracking-ultra uppercase text-maison-mist dark:text-dark-border flex-shrink-0 mt-0.5 transition-colors duration-250 group-hover:text-accent"
+                >{{ step.n }}</span
+              >
+              <div>
+                <p
+                  class="font-sans text-sm font-medium text-maison-ink dark:text-dark-primary mb-0.5"
+                >
+                  {{ step.title }}
+                </p>
+                <p class="font-sans text-xs leading-relaxed text-maison-ash dark:text-dark-muted">
+                  {{ step.body }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="h-px bg-maison-stone dark:bg-dark-border"></div>
+
+      <!-- Socials -->
+      <div>
+        <p
+          class="font-mono text-2xs tracking-ultra uppercase text-maison-ash dark:text-dark-muted mb-4"
+        >
+          Follow the Studio
+        </p>
+        @for (
+          s of [
+            { name: 'Instagram', handle: '@maisonlabel', href: '#' },
+            { name: 'LinkedIn', handle: 'MAISON Label', href: '#' },
+            { name: 'Pinterest', handle: 'maisonlabel', href: '#' },
+          ];
+          track s.name
+        ) {
+          <a
+            [href]="s.href"
+            class="group flex items-center justify-between py-2.5 border-b border-maison-stone dark:border-dark-border last:border-b-0 no-underline"
+          >
+            <span
+              class="font-sans text-sm text-maison-charcoal dark:text-dark-secondary group-hover:text-accent transition-colors duration-250"
+            >
+              {{ s.name }}
+            </span>
+            <span
+              class="font-mono text-2xs tracking-wide text-maison-ash dark:text-dark-muted group-hover:text-accent transition-colors duration-250"
+            >
+              {{ s.handle }}
+            </span>
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+
+  <!-- ── GOOGLE MAP ───────────────────────────────────────────────────────── -->
+  <div class="border-b border-maison-stone dark:border-dark-border">
+    <!-- Map label bar -->
+    <div
+      class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-0 px-5 py-5 md:px-12 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+    >
+      <div class="flex items-center gap-3">
+        <svg
+          class="w-4 h-4 text-accent flex-shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        >
+          <path
+            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0zM15 11a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+        <span
+          class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted"
+        >
+          14 Savile Row, London W1S 3JN
+        </span>
+      </div>
+      <a
+        href="https://maps.google.com/?q=14+Savile+Row+London"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group inline-flex items-center gap-2 self-start sm:self-auto font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 no-underline"
+      >
+        Open in Maps
+        <span class="transition-transform duration-250 group-hover:translate-x-1">↗</span>
+      </a>
+    </div>
+
+    <!-- Map iframe -->
+    <div class="relative w-full h-72 md:h-[460px] grayscale">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.0!2d-0.1427!3d51.5097!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487604d4e5db44b7%3A0x1c265e1c9c3adf8!2sSavile%20Row%2C%20London!5e0!3m2!1sen!2suk!4v1700000000000!5m2!1sen!2suk"
+        class="w-full h-full border-0"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="MAISON Studio Location"
+      ></iframe>
+    </div>
+  </div>
+
+  <!-- ── FAQ ACCORDION ───────────────────────────────────────────────────── -->
+  <div class="border-b border-maison-stone dark:border-dark-border">
+    <!-- FAQ Header -->
+    <div class="px-5 py-10 md:px-12 md:py-14 border-b border-maison-stone dark:border-dark-border">
+      <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-4">FAQ</p>
+      <h2
+        class="font-display font-light leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-5xl"
+      >
+        Common questions,<br />
+        <em class="italic text-accent">honest answers</em>
+      </h2>
+    </div>
+
+    <!-- FAQ Items -->
+    <div class="divide-y divide-maison-stone dark:divide-dark-border">
+      @for (faq of faqs; track faq.question; let i = $index) {
+        <div
+          class="group hover:bg-maison-cream dark:hover:bg-dark-surface transition-colors duration-250 ease-luxe"
+        >
+          <!-- Question row — clickable -->
+          <button
+            (click)="toggleFaq(i)"
+            class="w-full flex items-start justify-between px-5 py-6 md:px-12 md:py-7 text-left cursor-pointer bg-transparent border-none"
+          >
+            <span
+              class="font-display font-light text-lg md:text-xl tracking-tight text-maison-ink dark:text-dark-heading max-w-[55ch] pr-8 group-hover:text-maison-black dark:group-hover:text-dark-heading transition-colors duration-250"
+            >
+              {{ faq.question }}
+            </span>
+
+            <!-- +/- icon -->
+            <span
+              class="flex-shrink-0 w-7 h-7 flex items-center justify-center border border-maison-stone dark:border-dark-border text-maison-charcoal dark:text-dark-secondary transition-all duration-300 ease-luxe group-hover:border-accent group-hover:text-accent mt-0.5"
+              [class.bg-accent]="faq.open"
+              [class.border-accent]="faq.open"
+              [class.text-maison-white]="faq.open"
+            >
+              <svg
+                class="w-3.5 h-3.5 transition-transform duration-300"
+                [class.rotate-45]="faq.open"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+          </button>
+
+          <!-- Answer — animated open/close -->
+          <div
+            class="overflow-hidden transition-all duration-400 ease-luxe"
+            [class.max-h-0]="!faq.open"
+            [class.max-h-96]="faq.open"
+          >
+            <p
+              class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted px-5 pb-7 md:px-12 md:pb-8 max-w-[65ch]"
+            >
+              {{ faq.answer }}
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

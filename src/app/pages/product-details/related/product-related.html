@@ -1,0 +1,86 @@
+<div class="border-b border-maison-stone dark:border-dark-border">
+  <div
+    class="flex items-end justify-between px-5 py-8 md:px-12 md:py-12 border-b border-maison-stone dark:border-dark-border"
+  >
+    <div>
+      <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-3">You may also like</p>
+      <h3
+        class="font-display font-light text-3xl md:text-4xl leading-none tracking-tightest text-maison-black dark:text-dark-heading"
+      >
+        Related pieces
+      </h3>
+    </div>
+    <a
+      routerLink="/products"
+      class="group flex items-center gap-2 font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 no-underline mb-1"
+    >
+      View all
+      <span class="transition-transform duration-250 group-hover:translate-x-1">→</span>
+    </a>
+  </div>
+
+  <div
+    class="grid sm:grid-cols-2 md:grid-cols-4 border-t border-maison-stone dark:border-dark-border"
+  >
+    @for (rp of products(); track rp.id; let last = $last) {
+      <a
+        [routerLink]="['/products', rp.id]"
+        class="group relative cursor-pointer no-underline border-r border-maison-stone dark:border-dark-border"
+        [class.border-r-0]="last"
+        (mouseenter)="mouseEnter.emit(rp)"
+        (mouseleave)="mouseLeave.emit(rp)"
+      >
+        <div class="relative overflow-hidden aspect-[3/4] bg-maison-cream dark:bg-dark-surface">
+          <img
+            [src]="rp.primaryImage"
+            [alt]="rp.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-0]="rp.isHovered"
+            [class.opacity-100]="!rp.isHovered"
+          />
+          <img
+            [src]="rp.hoverImage"
+            [alt]="rp.name"
+            class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-luxe"
+            [class.opacity-100]="rp.isHovered"
+            [class.opacity-0]="!rp.isHovered"
+          />
+          <!-- Hover overlay with inquire button -->
+          <div
+            class="absolute inset-0 flex flex-col justify-end p-4 bg-gradient-to-t from-maison-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-350 ease-luxe"
+          >
+            <p class="font-mono text-2xs tracking-wider uppercase text-maison-white/60 mb-1">
+              {{ rp.category }}
+            </p>
+            <p class="font-display font-light text-lg text-maison-white leading-tight mb-3">
+              {{ rp.name }}
+            </p>
+            <button
+              (click)="inquire($event, rp.name)"
+              class="inline-flex items-center gap-2 font-mono text-2xs tracking-wider uppercase text-maison-white border border-maison-white/40 px-3 py-2 self-start hover:bg-accent hover:border-accent transition-colors duration-250 cursor-pointer bg-transparent"
+            >
+              Inquire →
+            </button>
+          </div>
+        </div>
+        <div
+          class="px-4 py-4 border-t border-maison-stone dark:border-dark-border bg-maison-white dark:bg-dark-base group-hover:bg-maison-cream dark:group-hover:bg-dark-surface transition-colors duration-250"
+        >
+          <p
+            class="font-mono text-2xs tracking-wider uppercase text-maison-mist dark:text-dark-muted mb-1"
+          >
+            {{ rp.category }}
+          </p>
+          <p
+            class="font-display font-light text-lg tracking-tight text-maison-ink dark:text-dark-heading leading-tight"
+          >
+            {{ rp.name }}
+          </p>
+          <div
+            class="mt-2 h-px bg-maison-stone dark:bg-dark-border transition-all duration-400 group-hover:bg-accent"
+          ></div>
+        </div>
+      </a>
+    }
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div
+  class="flex items-center justify-between px-5 py-4 md:px-8 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+>
+  <p class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted">
+    {{ filteredCount() }} {{ filteredCount() === 1 ? 'piece' : 'pieces' }}
+    @if (activeCategory() !== 'All') {
+      <span> — {{ activeCategory() }}</span>
+    }
+  </p>
+
+  <div class="flex gap-1.5">
+    <button
+      (click)="viewChange.emit('grid')"
+      class="p-2 border transition-colors duration-250 cursor-pointer"
+      [class.bg-maison-black]="viewMode() === 'grid'"
+      [class.dark:bg-dark-heading]="viewMode() === 'grid'"
+      [class.text-maison-cream]="viewMode() === 'grid'"
+      [class.dark:text-dark-surface]="viewMode() === 'grid'"
+      [class.border-maison-black]="viewMode() === 'grid'"
+      [class.bg-transparent]="viewMode() !== 'grid'"
+      [class.text-maison-charcoal]="viewMode() !== 'grid'"
+      [class.dark:text-dark-secondary]="viewMode() !== 'grid'"
+      [class.border-maison-stone]="viewMode() !== 'grid'"
+      [class.dark:border-dark-border]="viewMode() !== 'grid'"
+      aria-label="Grid view"
+    >
+      <svg
+        class="w-3.5 h-3.5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+        <rect x="14" y="14" width="7" height="7" />
+      </svg>
+    </button>
+    <button
+      (click)="viewChange.emit('list')"
+      class="p-2 border transition-colors duration-250 cursor-pointer"
+      [class.bg-maison-black]="viewMode() === 'list'"
+      [class.dark:bg-dark-heading]="viewMode() === 'list'"
+      [class.text-maison-cream]="viewMode() === 'list'"
+      [class.dark:text-dark-surface]="viewMode() === 'list'"
+      [class.border-maison-black]="viewMode() === 'list'"
+      [class.bg-transparent]="viewMode() !== 'list'"
+      [class.text-maison-charcoal]="viewMode() !== 'list'"
+      [class.dark:text-dark-secondary]="viewMode() !== 'list'"
+      [class.border-maison-stone]="viewMode() !== 'list'"
+      [class.dark:border-dark-border]="viewMode() !== 'list'"
+      aria-label="List view"
+    >
+      <svg
+        class="w-3.5 h-3.5"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+      >
+        <line x1="8" y1="6" x2="21" y2="6" />
+        <line x1="8" y1="12" x2="21" y2="12" />
+        <line x1="8" y1="18" x2="21" y2="18" />
+        <line x1="3" y1="6" x2="3.01" y2="6" />
+        <line x1="3" y1="12" x2="3.01" y2="12" />
+        <line x1="3" y1="18" x2="3.01" y2="18" />
+      </svg>
+    </button>
+  </div>
+</div>

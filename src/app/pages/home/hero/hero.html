@@ -1,0 +1,111 @@
+<section
+  class="flex flex-col !h-[cal(100svh-80px)] bg-gradient-spotlight dark:bg-dark-base transition-colors duration-400 ease-luxe overflow-hidden"
+>
+  <div class="flex items-stretch md:flex-row flex-col">
+    <!-- LEFT — Editorial Text Panel -->
+    <div
+      class="flex flex-col flex-1 justify-between px-6 py-10 sm:px-10 sm:py-14 lg:px-12 lg:py-16 lg:border-r border-b lg:border-b-0 border-maison-stone dark:border-dark-border"
+    >
+      <div>
+        <!-- Eyebrow -->
+        <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-6">
+          SS 2025 Collection
+        </p>
+
+        <!-- Headline -->
+        <h1
+          class="font-display font-bold text-5xl sm:text-6xl lg:text-7xl leading-none tracking-tightest text-maison-black dark:text-dark-heading mb-8"
+        >
+          Dressed<br />
+          in <em class="italic text-accent font-[serif] font-medium">Quiet</em
+          ><br class="md:flex hidden" />
+          Luxury
+        </h1>
+
+        <!-- Subline -->
+        <p
+          class="font-sans text-sm leading-relaxed tracking-wide text-maison-ash dark:text-dark-muted max-w-[50ch] mb-10"
+        >
+          Elevated essentials crafted for those who understand that true style whispers. Timeless
+          silhouettes, considered fabrics, refined details.
+        </p>
+
+        <!-- CTAs -->
+        <div class="flex sm:items-center flex-col sm:flex-row gap-5 sm:gap-8">
+          <a
+            class="bg-maison-black dark:bg-dark-heading text-maison-white dark:text-dark-base px-8 py-3.5 text-xs tracking-wider uppercase font-sans transition-colors duration-250 ease-luxe hover:bg-accent"
+            [routerLink]="['/products']"
+          >
+            View Collection
+          </a>
+
+          <!-- <button
+            class="group flex items-center gap-2 text-xs tracking-wider uppercase font-sans text-maison-charcoal dark:text-dark-secondary hover:text-accent dark:hover:text-accent transition-colors duration-250 ease-luxe bg-transparent border-none p-0 cursor-pointer"
+          >
+            View Lookbook
+            <span
+              class="inline-block transition-transform duration-250 ease-luxe group-hover:translate-x-1"
+              >→</span
+            >
+          </button> -->
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="flex gap-10">
+        @for (stat of stats; track stat.label) {
+          <div>
+            <p
+              class="font-display font-light text-3xl sm:text-4xl md:text-5xl text-maison-ink dark:text-dark-primary leading-none"
+            >
+              {{ stat.value }}
+            </p>
+            <p
+              class="font-mono text-2xs tracking-widest uppercase text-maison-ash dark:text-dark-muted mt-1"
+            >
+              {{ stat.label }}
+            </p>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- RIGHT — Image Mosaic -->
+    <div class="grid grid-cols-2 h-96 sm:!h-screen sm:flex-1">
+      @for (img of heroImages; track img.src) {
+        <div
+          [class.row-span-2]="img.tall"
+          [class.col-span-1]="img.tall"
+          class="overflow-hidden relative"
+        >
+          @if (img.badge) {
+            <span
+              class="absolute bottom-4 left-4 bg-maison-white dark:bg-dark-surface text-maison-ink dark:text-dark-primary px-3 py-1.5 text-2xs tracking-widest uppercase font-mono z-50"
+            >
+              {{ img.badge }}
+            </span>
+          }
+          <img
+            [src]="img.src"
+            class="w-full h-full object-cover grayscale-[15%] transition-transform duration-600 ease-luxe hover:scale-110"
+            alt=""
+          />
+        </div>
+      }
+    </div>
+  </div>
+  <div
+    class="border-t border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface overflow-hidden py-2.5 transition-colors duration-400 ease-luxe"
+  >
+    <div class="ticker-track flex whitespace-nowrap">
+      @for (item of tickerLoop; track $index) {
+        <span
+          class="font-mono text-2xs tracking-ultra uppercase text-maison-ash dark:text-dark-muted px-8"
+        >
+          {{ item }}
+        </span>
+        <span class="text-accent text-xs px-2">✦</span>
+      }
+    </div>
+  </div>
+</section>

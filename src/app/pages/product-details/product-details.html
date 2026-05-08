@@ -1,0 +1,28 @@
+<div class="bg-maison-white dark:bg-dark-base transition-colors duration-400 ease-luxe">
+  <app-breadcrumb
+    [items]="[
+      { label: 'Home', link: '/' },
+      { label: 'Products', link: '/products' },
+      { label: product.name },
+    ]"
+  />
+  <app-product-gallery
+    [images]="galleriaImages"
+    [product]="product"
+    [specs]="specs"
+    [reviews]="reviews"
+    [averageRating]="averageRating"
+  />
+
+  <app-product-reviews
+    [reviews]="reviews"
+    [averageRating]="averageRating"
+    [ratingBreakdown]="ratingBreakdown"
+  />
+
+  <app-product-related
+    [products]="relatedProducts"
+    (mouseEnter)="onMouseEnter($event)"
+    (mouseLeave)="onMouseLeave($event)"
+  />
+</div>

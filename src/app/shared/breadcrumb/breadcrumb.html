@@ -1,0 +1,19 @@
+<div
+  class="flex items-center gap-2 px-5 py-4 md:px-12 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+>
+  @for (item of items(); track item.label; let last = $last) {
+    @if (item.link && !last) {
+      <a
+        [routerLink]="item.link"
+        class="font-mono text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted hover:text-accent transition-colors duration-250 no-underline"
+      >{{ item.label }}</a>
+    } @else {
+      <span class="font-mono text-2xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary">
+        {{ item.label }}
+      </span>
+    }
+    @if (!last) {
+      <span class="font-mono text-2xs text-maison-mist dark:text-dark-border">/</span>
+    }
+  }
+</div>

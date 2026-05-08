@@ -1,0 +1,34 @@
+<div
+  class="bg-maison-white dark:bg-dark-base transition-colors duration-400 ease-luxe min-h-screen"
+>
+  <app-products-header
+    [filteredProductsLength]="filteredProducts().length"
+    [categoriesLength]="categories.length - 1"
+  />
+
+  <div class="flex flex-col lg:flex-row">
+    <app-products-sidebar
+      [categories]="categories"
+      [activeCategory]="activeCategory()"
+      [viewMode]="viewMode()"
+      (categoryChange)="setCategory($event)"
+      (viewChange)="setView($event)"
+    />
+
+    <div class="flex-1 min-w-0">
+      <app-products-toolbar
+        [filteredCount]="filteredProducts().length"
+        [activeCategory]="activeCategory()"
+        [viewMode]="viewMode()"
+        (viewChange)="setView($event)"
+      />
+
+      <app-products-grid
+        [products]="filteredProducts()"
+        [viewMode]="viewMode()"
+        (mouseEnter)="onMouseEnter($event)"
+        (mouseLeave)="onMouseLeave($event)"
+      />
+    </div>
+  </div>
+</div>

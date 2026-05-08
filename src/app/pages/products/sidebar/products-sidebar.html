@@ -1,0 +1,131 @@
+<!-- Mobile category strip -->
+<div
+  class="lg:hidden flex items-center gap-2 overflow-x-auto px-5 py-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface scrollbar-hide transition-colors duration-400 ease-luxe"
+>
+  @for (cat of categories(); track cat.label) {
+    <button
+      (click)="categoryChange.emit(cat.label)"
+      class="flex-shrink-0 flex items-center gap-1.5 px-4 py-2 font-mono text-2xs tracking-wider uppercase border transition-all duration-250 ease-luxe cursor-pointer whitespace-nowrap"
+      [class.bg-maison-black]="activeCategory() === cat.label"
+      [class.dark:bg-dark-heading]="activeCategory() === cat.label"
+      [class.text-maison-white]="activeCategory() === cat.label"
+      [class.dark:text-dark-base]="activeCategory() === cat.label"
+      [class.border-maison-black]="activeCategory() === cat.label"
+      [class.dark:border-dark-heading]="activeCategory() === cat.label"
+      [class.bg-transparent]="activeCategory() !== cat.label"
+      [class.text-maison-charcoal]="activeCategory() !== cat.label"
+      [class.dark:text-dark-secondary]="activeCategory() !== cat.label"
+      [class.border-maison-stone]="activeCategory() !== cat.label"
+      [class.dark:border-dark-border]="activeCategory() !== cat.label"
+      [class.hover:border-maison-charcoal]="activeCategory() !== cat.label"
+    >
+      {{ cat.label }}
+      <span class="text-2xs opacity-50">{{ cat.count }}</span>
+    </button>
+  }
+</div>
+
+<!-- Desktop sidebar -->
+<aside
+  class="hidden lg:flex flex-col flex-shrink-0 w-60 xl:w-72 border-r border-maison-stone dark:border-dark-border sticky top-0 self-start h-screen transition-colors duration-400 ease-luxe bg-maison-white dark:bg-dark-base"
+>
+  <div class="px-8 py-8 border-b border-maison-stone dark:border-dark-border">
+    <p class="font-mono text-2xs tracking-ultra uppercase text-maison-ash dark:text-dark-muted">
+      Filter by Category
+    </p>
+  </div>
+
+  <nav class="flex flex-col py-4 overflow-y-auto flex-1">
+    @for (cat of categories(); track cat.label) {
+      <button
+        (click)="categoryChange.emit(cat.label)"
+        class="group flex items-center justify-between px-8 py-3.5 text-left cursor-pointer border-none transition-colors duration-250 ease-luxe border-l-2"
+        [class.border-l-accent]="activeCategory() === cat.label"
+        [class.bg-maison-cream]="activeCategory() === cat.label"
+        [class.dark:bg-dark-surface]="activeCategory() === cat.label"
+        [class.border-l-transparent]="activeCategory() !== cat.label"
+        [class.bg-transparent]="activeCategory() !== cat.label"
+        [class.hover:bg-maison-cream]="activeCategory() !== cat.label"
+        [class.dark:hover:bg-dark-surface]="activeCategory() !== cat.label"
+      >
+        <span
+          class="font-sans text-sm transition-colors duration-250"
+          [class.text-maison-black]="activeCategory() === cat.label"
+          [class.dark:text-dark-heading]="activeCategory() === cat.label"
+          [class.font-medium]="activeCategory() === cat.label"
+          [class.text-maison-charcoal]="activeCategory() !== cat.label"
+          [class.dark:text-dark-secondary]="activeCategory() !== cat.label"
+          [class.group-hover:text-maison-black]="activeCategory() !== cat.label"
+          [class.dark:group-hover:text-dark-heading]="activeCategory() !== cat.label"
+        >
+          {{ cat.label }}
+        </span>
+        <span
+          class="font-mono text-2xs tracking-wide transition-colors duration-250"
+          [class.text-accent]="activeCategory() === cat.label"
+          [class.text-maison-mist]="activeCategory() !== cat.label"
+          [class.dark:text-dark-border]="activeCategory() !== cat.label"
+        >
+          {{ cat.count }}
+        </span>
+      </button>
+    }
+  </nav>
+
+  <!-- View mode toggle -->
+  <div class="px-8 py-6 border-t border-maison-stone dark:border-dark-border">
+    <p class="font-mono text-2xs tracking-ultra uppercase text-maison-ash dark:text-dark-muted mb-4">
+      View
+    </p>
+    <div class="flex gap-2">
+      <button
+        (click)="viewChange.emit('grid')"
+        class="flex-1 flex items-center justify-center gap-2 py-2.5 border transition-all duration-250 ease-luxe cursor-pointer font-mono text-2xs tracking-wider uppercase"
+        [class.bg-maison-black]="viewMode() === 'grid'"
+        [class.dark:bg-dark-heading]="viewMode() === 'grid'"
+        [class.text-maison-white]="viewMode() === 'grid'"
+        [class.dark:text-dark-base]="viewMode() === 'grid'"
+        [class.border-maison-black]="viewMode() === 'grid'"
+        [class.bg-transparent]="viewMode() !== 'grid'"
+        [class.text-maison-charcoal]="viewMode() !== 'grid'"
+        [class.dark:text-dark-secondary]="viewMode() !== 'grid'"
+        [class.border-maison-stone]="viewMode() !== 'grid'"
+        [class.dark:border-dark-border]="viewMode() !== 'grid'"
+        aria-label="Grid view"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+        </svg>
+        Grid
+      </button>
+      <button
+        (click)="viewChange.emit('list')"
+        class="flex-1 flex items-center justify-center gap-2 py-2.5 border transition-all duration-250 ease-luxe cursor-pointer font-mono text-2xs tracking-wider uppercase"
+        [class.bg-maison-black]="viewMode() === 'list'"
+        [class.dark:bg-dark-heading]="viewMode() === 'list'"
+        [class.text-maison-white]="viewMode() === 'list'"
+        [class.dark:text-dark-base]="viewMode() === 'list'"
+        [class.border-maison-black]="viewMode() === 'list'"
+        [class.bg-transparent]="viewMode() !== 'list'"
+        [class.text-maison-charcoal]="viewMode() !== 'list'"
+        [class.dark:text-dark-secondary]="viewMode() !== 'list'"
+        [class.border-maison-stone]="viewMode() !== 'list'"
+        [class.dark:border-dark-border]="viewMode() !== 'list'"
+        aria-label="List view"
+      >
+        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <line x1="8" y1="6" x2="21" y2="6" />
+          <line x1="8" y1="12" x2="21" y2="12" />
+          <line x1="8" y1="18" x2="21" y2="18" />
+          <line x1="3" y1="6" x2="3.01" y2="6" />
+          <line x1="3" y1="12" x2="3.01" y2="12" />
+          <line x1="3" y1="18" x2="3.01" y2="18" />
+        </svg>
+        List
+      </button>
+    </div>
+  </div>
+</aside>
