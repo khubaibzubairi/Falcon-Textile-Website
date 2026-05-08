@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, signal } from '@angular/core';
 import { NgxNumberTickerComponent } from '@omnedia/ngx-number-ticker';
+import { createCounter } from '../../../utils/app.utils';
 
 interface ValueProp {
   number: string;
@@ -25,7 +26,9 @@ interface Stat {
   templateUrl: './why-us.html',
   styleUrl: './why-us.scss',
 })
-export class WhyUs {
+export class WhyUs implements AfterViewInit {
+  @ViewChild('statsBar') statsBar!: ElementRef;
+  hasAnimated = signal(false);
   valueProps: ValueProp[] = [
     {
       number: '01',
@@ -100,4 +103,33 @@ export class WhyUs {
       animation: true,
     },
   ];
+
+  ngAfterViewInit(): void {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !this.hasAnimated()) {
+            this.hasAnimated.set(true);
+            this.stats.forEach((stat) => {
+              if (stat.animation) {
+                const counter = createCounter({ to: stat.number.value });
+                const interval = setInterval(() => {
+                  const current = counter();
+                  if (current >= stat.number.value) {
+                    clearInterval(interval);
+                  }
+                }, 16);
+              }
+            });
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+
+    if (this.statsBar?.nativeElement) {
+      observer.observe(this.statsBar.nativeElement);
+    }
+  }
 }

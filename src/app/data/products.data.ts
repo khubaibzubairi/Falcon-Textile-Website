@@ -29,6 +29,7 @@ export interface Product {
 
 // ── Categories ────────────────────────────────────────────────────────────────
 export const Categories = [
+  { label: 'All', count: 0 },
   { label: 'Coveralls', count: 0 },
   { label: 'Trousers & Cargo Trousers', count: 0 },
   { label: 'Safety Jackets', count: 0 },
