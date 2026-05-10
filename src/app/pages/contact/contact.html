@@ -31,15 +31,14 @@
 
   <!-- ── CONTACT INFO STRIP ──────────────────────────────────────────────── -->
   <div
-    class="grid grid-cols-2 lg:grid-cols-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
+    class="grid sm:grid-cols-2 lg:grid-cols-4 border-b border-maison-stone dark:border-dark-border bg-maison-cream dark:bg-dark-surface transition-colors duration-400 ease-luxe"
   >
     @for (info of contactInfo; track info.label; let i = $index; let last = $last) {
       <div
-        class="group flex items-start gap-3 px-5 py-6 md:px-8 md:py-8 border-maison-stone dark:border-dark-border hover:bg-maison-stone/30 dark:hover:bg-dark-elevated transition-colors duration-250 ease-luxe"
+        class="group flex items-start gap-3 px-5 py-6 md:px-8 md:py-8 border-maison-stone dark:border-dark-border hover:bg-maison-stone/30 dark:hover:bg-dark-elevated transition-colors duration-250 ease-luxe border-b"
         [class.border-r]="i % 2 === 0"
         [class.lg:border-r]="!last"
         [class.lg:border-r-0]="last"
-        [class.border-b]="i < 2"
         [class.lg:border-b-0]="true"
       >
         <!-- Icon -->

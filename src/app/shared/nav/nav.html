@@ -4,7 +4,7 @@
 >
   <!-- Logo -->
   <a routerLink="/" class="w-32 dark:bg-white p-2 rounded-md">
-    <img src="/assets/images/logo.png" alt="" />
+    <img [src]="['assets/images/logo.png']" alt="" />
   </a>
 
   <!-- Desktop Nav Links -->
@@ -230,15 +230,9 @@
   styleClass="!bg-maison-white dark:!bg-dark-base !border-r !border-maison-stone dark:!border-dark-border"
 >
   <ng-template #header>
-    <div class="flex items-center gap-3">
-      <span class="font-mono text-xl tracking-ultra text-maison-black dark:text-dark-heading"
-        >MAISON</span
-      >
-      <span class="w-px h-4 bg-maison-stone dark:bg-dark-border"></span>
-      <span class="font-sans text-2xs tracking-wider uppercase text-maison-ash dark:text-dark-muted"
-        >Atelier</span
-      >
-    </div>
+    <a routerLink="/" class="w-32 dark:bg-white p-2 rounded-md" (click)="drawerVisible = false">
+      <img [src]="['assets/images/logo.png']" alt="" />
+    </a>
   </ng-template>
 
   <div class="flex flex-col h-full">
@@ -247,12 +241,14 @@
         <li class="border-b border-maison-stone dark:border-dark-border">
           @if (link.hasMega) {
             <!-- Accordion trigger -->
-            <button
+            <a
               (click)="mobileProductsOpen.set(!mobileProductsOpen())"
               class="w-full flex items-center justify-between px-2 py-4 text-xs tracking-wider uppercase bg-transparent border-none cursor-pointer transition-colors duration-250"
               [class.text-accent]="mobileProductsOpen()"
               [class.text-maison-charcoal]="!mobileProductsOpen()"
               [class.dark:text-dark-secondary]="!mobileProductsOpen()"
+              [routerLink]="[link.route]"
+              routerLinkActive="!text-white !dark:bg-gradient-gold !bg-gradient-gold-dark !shadow-md"
             >
               {{ link.label }}
               <svg
@@ -265,7 +261,7 @@
               >
                 <path d="M6 9l6 6 6-6" />
               </svg>
-            </button>
+            </a>
 
             <!-- Accordion content -->
             <div
@@ -276,9 +272,6 @@
               <div class="bg-maison-cream dark:bg-dark-surface pb-2">
                 @for (cat of megaCategories; track cat.label) {
                   <div class="px-4 pt-4 pb-2">
-                    <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-2">
-                      {{ cat.label }}
-                    </p>
                     <ul class="">
                       @for (item of cat.items; track item.label) {
                         <li class="">
@@ -313,7 +306,7 @@
           } @else {
             <a
               [routerLink]="link.route"
-              routerLinkActive="!text-accent"
+              routerLinkActive="!text-white !dark:bg-gradient-gold !bg-gradient-gold-dark !shadow-md"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="drawerVisible = false"
               class="block px-2 py-4 text-xs tracking-wider uppercase text-maison-charcoal dark:text-dark-secondary hover:text-accent transition-colors duration-250 ease-luxe no-underline"

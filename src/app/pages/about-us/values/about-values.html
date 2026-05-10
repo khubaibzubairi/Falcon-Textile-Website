@@ -1,8 +1,10 @@
 <div class="border-b border-maison-stone dark:border-dark-border">
   <div class="px-5 py-10 md:px-12 md:py-14 border-b border-maison-stone dark:border-dark-border">
     <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-4">What we stand for</p>
-    <h2 class="font-display font-light leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-5xl">
-      Principles, not<br /><em class="italic text-accent">policies</em>
+    <h2
+      class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-5xl"
+    >
+      Principles, not<br /><em class="italic text-accent font-[serif]">policies</em>
     </h2>
   </div>
 
@@ -15,20 +17,37 @@
         [class.border-b-0]="last"
       >
         <div class="flex items-start justify-between mb-6">
-          <span class="font-mono text-2xs tracking-ultra uppercase text-maison-mist dark:text-dark-border transition-colors duration-250 group-hover:text-accent">
+          <span
+            class="font-mono text-2xs tracking-ultra uppercase text-maison-mist dark:text-dark-border transition-colors duration-250 group-hover:text-accent"
+          >
             {{ v.number }}
           </span>
-          <div class="w-10 h-10 flex items-center justify-center border border-maison-stone dark:border-dark-border text-maison-charcoal dark:text-dark-secondary transition-all duration-250 group-hover:border-accent group-hover:text-accent">
-            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <div
+            class="w-10 h-10 flex items-center justify-center border border-maison-stone dark:border-dark-border text-maison-charcoal dark:text-dark-secondary transition-all duration-250 group-hover:border-accent group-hover:text-accent"
+          >
+            <svg
+              class="w-5 h-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+            >
               <path [attr.d]="v.icon" />
             </svg>
           </div>
         </div>
-        <div class="w-8 h-px bg-maison-stone dark:bg-dark-border mb-5 transition-all duration-400 group-hover:w-14 group-hover:bg-accent"></div>
-        <h3 class="font-display font-light text-xl md:text-2xl tracking-tight text-maison-ink dark:text-dark-heading mb-3 leading-snug">
+        <div
+          class="w-8 h-px bg-maison-stone dark:bg-dark-border mb-5 transition-all duration-400 group-hover:w-14 group-hover:bg-accent"
+        ></div>
+        <h3
+          class="font-display font-light text-xl md:text-2xl tracking-tight text-maison-ink dark:text-dark-heading mb-3 leading-snug"
+        >
           {{ v.title }}
         </h3>
-        <p class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted">{{ v.body }}</p>
+        <p class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted">
+          {{ v.body }}
+        </p>
       </div>
     }
   </div>

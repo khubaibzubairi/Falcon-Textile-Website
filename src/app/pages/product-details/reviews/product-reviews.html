@@ -3,31 +3,59 @@
   <div class="px-5 py-10 md:px-12 md:py-14 border-b border-maison-stone dark:border-dark-border">
     <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-4">Reviews</p>
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-      <h2 class="font-display font-light leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-5xl">
-        What buyers<br /><em class="italic text-accent">are saying</em>
+      <h2
+        class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-4xl md:text-5xl"
+      >
+        What buyers<br /><em class="italic text-accent font-[serif]">are saying</em>
       </h2>
 
       <div class="flex items-center gap-8 md:mb-1">
         <div class="text-center">
-          <p class="font-display font-light text-6xl leading-none text-maison-ink dark:text-dark-heading">{{ averageRating() }}</p>
+          <p
+            class="font-display font-light text-6xl leading-none text-maison-ink dark:text-dark-heading"
+          >
+            {{ averageRating() }}
+          </p>
           <div class="flex items-center justify-center gap-1 mt-2">
             @for (star of starsArray(5); track star) {
-              <svg class="w-4 h-4" [class.text-accent]="star <= averageRating()" [class.text-maison-stone]="star > averageRating()" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              <svg
+                class="w-4 h-4"
+                [class.text-accent]="star <= averageRating()"
+                [class.text-maison-stone]="star > averageRating()"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                />
               </svg>
             }
           </div>
-          <p class="font-mono text-2xs tracking-wide uppercase text-maison-ash dark:text-dark-muted mt-1">{{ reviews().length }} reviews</p>
+          <p
+            class="font-mono text-2xs tracking-wide uppercase text-maison-ash dark:text-dark-muted mt-1"
+          >
+            {{ reviews().length }} reviews
+          </p>
         </div>
 
         <div class="flex flex-col gap-1.5 min-w-[160px]">
           @for (row of ratingBreakdown(); track row.stars) {
             <div class="flex items-center gap-2">
-              <span class="font-mono text-2xs text-maison-ash dark:text-dark-muted w-3 text-right">{{ row.stars }}</span>
-              <div class="flex-1 h-1.5 bg-maison-stone dark:bg-dark-border rounded-none overflow-hidden">
-                <div class="h-full bg-accent transition-all duration-600 ease-luxe" [style.width.%]="row.pct"></div>
+              <span
+                class="font-mono text-2xs text-maison-ash dark:text-dark-muted w-3 text-right"
+                >{{ row.stars }}</span
+              >
+              <div
+                class="flex-1 h-1.5 bg-maison-stone dark:bg-dark-border rounded-none overflow-hidden"
+              >
+                <div
+                  class="h-full bg-accent transition-all duration-600 ease-luxe"
+                  [style.width.%]="row.pct"
+                ></div>
               </div>
-              <span class="font-mono text-2xs text-maison-mist dark:text-dark-border w-4">{{ row.count }}</span>
+              <span class="font-mono text-2xs text-maison-mist dark:text-dark-border w-4">{{
+                row.count
+              }}</span>
             </div>
           }
         </div>
@@ -38,18 +66,36 @@
   <!-- Review list -->
   <div class="divide-y divide-maison-stone dark:divide-dark-border">
     @for (review of reviews(); track review.id) {
-      <div class="group flex flex-col md:grid md:grid-cols-[200px_1fr] gap-5 md:gap-0 px-5 py-10 md:px-12 hover:bg-maison-cream dark:hover:bg-dark-surface transition-colors duration-250 ease-luxe">
+      <div
+        class="group flex flex-col md:grid md:grid-cols-[200px_1fr] gap-5 md:gap-0 px-5 py-10 md:px-12 hover:bg-maison-cream dark:hover:bg-dark-surface transition-colors duration-250 ease-luxe"
+      >
         <div class="flex flex-row md:flex-col justify-between md:justify-start md:pr-10 md:pt-1">
           <div>
-            <p class="font-sans text-sm font-medium text-maison-ink dark:text-dark-primary">{{ review.name }}</p>
-            <p class="font-sans text-xs text-maison-ash dark:text-dark-muted mt-0.5">{{ review.role }}</p>
-            <p class="font-mono text-2xs tracking-wide uppercase text-accent mt-0.5">{{ review.company }}</p>
+            <p class="font-sans text-sm font-medium text-maison-ink dark:text-dark-primary">
+              {{ review.name }}
+            </p>
+            <p class="font-sans text-xs text-maison-ash dark:text-dark-muted mt-0.5">
+              {{ review.role }}
+            </p>
+            <p class="font-mono text-2xs tracking-wide uppercase text-accent mt-0.5">
+              {{ review.company }}
+            </p>
           </div>
           <div class="flex flex-col items-end md:items-start md:mt-auto md:pt-6 gap-1">
-            <p class="font-mono text-2xs tracking-wide text-maison-mist dark:text-dark-border">{{ review.date }}</p>
+            <p class="font-mono text-2xs tracking-wide text-maison-mist dark:text-dark-border">
+              {{ review.date }}
+            </p>
             @if (review.verified) {
-              <span class="font-mono text-2xs tracking-wide uppercase text-accent flex items-center gap-1">
-                <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <span
+                class="font-mono text-2xs tracking-wide uppercase text-accent flex items-center gap-1"
+              >
+                <svg
+                  class="w-3 h-3"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
                   <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 Verified
@@ -61,18 +107,33 @@
         <div class="md:border-l md:border-maison-stone md:dark:border-dark-border md:pl-10">
           <div class="flex items-center gap-1 mb-3">
             @for (star of starsArray(5); track star) {
-              <svg class="w-3.5 h-3.5"
+              <svg
+                class="w-3.5 h-3.5"
                 [class.text-accent]="star <= review.rating"
                 [class.text-maison-stone]="star > review.rating"
                 [class.dark:text-dark-border]="star > review.rating"
-                viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                />
               </svg>
             }
           </div>
-          <h4 class="font-display font-light text-xl tracking-tight text-maison-ink dark:text-dark-heading mb-3 leading-tight">{{ review.title }}</h4>
-          <p class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted max-w-[60ch]">{{ review.body }}</p>
-          <div class="mt-6 h-px w-10 bg-maison-stone dark:bg-dark-border transition-all duration-500 ease-luxe group-hover:w-20 group-hover:bg-accent"></div>
+          <h4
+            class="font-display font-light text-xl tracking-tight text-maison-ink dark:text-dark-heading mb-3 leading-tight"
+          >
+            {{ review.title }}
+          </h4>
+          <p
+            class="font-sans text-sm leading-relaxed text-maison-ash dark:text-dark-muted max-w-[60ch]"
+          >
+            {{ review.body }}
+          </p>
+          <div
+            class="mt-6 h-px w-10 bg-maison-stone dark:bg-dark-border transition-all duration-500 ease-luxe group-hover:w-20 group-hover:bg-accent"
+          ></div>
         </div>
       </div>
     }

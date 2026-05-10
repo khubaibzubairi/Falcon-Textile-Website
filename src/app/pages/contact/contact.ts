@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormsModule,
@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { SeoService } from '../../shared/seo.service';
 
 interface FaqItem {
   question: string;
@@ -28,7 +29,8 @@ interface ContactInfo {
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
-export class Contact {
+export class Contact implements OnInit {
+  private seo = inject(SeoService);
   // ── Form ────────────────────────────────────────────────────────────────
   form: FormGroup;
   submitted = false;
@@ -52,6 +54,17 @@ export class Contact {
       inquiryType: ['', [Validators.required]],
       budget: [''],
       message: ['', [Validators.required, Validators.minLength(20)]],
+    });
+  }
+
+  ngOnInit(): void {
+    this.seo.updateMetaTags({
+      title: 'Contact Us - Falcon Textile Garments',
+      description:
+        'Get in touch with Falcon Textile Garments for wholesale partnerships, custom orders, and private label production. Our studio is open Mon-Fri, 9am-6pm GMT.',
+      keywords: 'contact falcon, wholesale inquiry, custom order, private label contact',
+      url: 'https://falcontextilegarments.com/contact',
+      type: 'website',
     });
   }
 

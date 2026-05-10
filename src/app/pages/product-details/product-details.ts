@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { RouterModule, ActivatedRoute } from '@angular/router';
 import { GalleriaModule } from 'primeng/galleria';
 import { Breadcrumb } from '../../shared/breadcrumb/breadcrumb';
@@ -6,6 +6,9 @@ import { ProductGallery } from './gallery/product-gallery';
 import { ProductReviews } from './reviews/product-reviews';
 import { ProductRelated } from './related/product-related';
 import { AllProducts, Product } from '../../data/products.data';
+import { Title } from '@angular/platform-browser';
+import { Subject, takeUntil } from 'rxjs';
+import { SeoService } from '../../shared/seo.service';
 
 export interface GalleriaImage {
   itemImageSrc: string;
@@ -42,18 +45,28 @@ export interface RelatedProduct {
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [RouterModule, GalleriaModule, Breadcrumb, ProductGallery, ProductReviews, ProductRelated],
+  imports: [
+    RouterModule,
+    GalleriaModule,
+    Breadcrumb,
+    ProductGallery,
+    ProductReviews,
+    ProductRelated,
+  ],
   templateUrl: './product-details.html',
   styleUrl: './product-details.scss',
 })
-export class ProductDetails implements OnInit {
+export class ProductDetails implements OnInit, OnDestroy {
   private route = inject(ActivatedRoute);
-  
+  private title = inject(Title);
+  private seo = inject(SeoService);
+
   currentProduct: Product | null = null;
   galleriaImages: GalleriaImage[] = [];
   product: any = {};
   specs: ProductSpec[] = [];
   relatedProducts: RelatedProduct[] = [];
+  $destroy = new Subject();
 
   galleriaResponsiveOptions = [
     { breakpoint: '1024px', numVisible: 4 },
@@ -126,19 +139,58 @@ export class ProductDetails implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntil(this.$destroy)).subscribe((params) => {
       const productId = +params['id'];
       this.loadProduct(productId);
     });
+  }
+
+  ngOnDestroy() {
+    this.$destroy.next(true);
+    this.$destroy.complete();
   }
 
   private loadProduct(id: number): void {
     this.currentProduct = AllProducts.find((p) => p.id === id) || null;
 
     if (!this.currentProduct) {
-      // Fallback to first product if not found
       this.currentProduct = AllProducts[0];
     }
+
+    this.title.setTitle(`${this.currentProduct.name} - Falcon Textile Garments`);
+
+    // SEO Meta Tags
+    this.seo.updateMetaTags({
+      title: `${this.currentProduct.name} - Falcon Textile Garments`,
+      description: this.currentProduct.description || `${this.currentProduct.name} - Premium ${this.currentProduct.category} wholesale manufacturing`,
+      keywords: `${this.currentProduct.name}, ${this.currentProduct.category}, wholesale ${this.currentProduct.subCategory}, custom manufacturing`,
+      image: this.currentProduct.primaryImage,
+      url: `https://falcontextilegarments.com/product-details/${this.currentProduct.id}`,
+      type: 'product',
+    });
+
+    // Structured Data - Product
+    this.seo.addStructuredData({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: this.currentProduct.name,
+      description: this.currentProduct.description,
+      image: this.currentProduct.primaryImage,
+      brand: {
+        '@type': 'Brand',
+        name: 'Falcon Textile Garments',
+      },
+      offers: {
+        '@type': 'Offer',
+        availability: 'https://schema.org/InStock',
+        priceCurrency: 'USD',
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: this.averageRating,
+        reviewCount: this.reviews.length,
+      },
+    });
 
     // Map product data to component properties
     this.product = {
@@ -172,7 +224,7 @@ export class ProductDetails implements OnInit {
 
     // Related products (same category, exclude current)
     this.relatedProducts = AllProducts.filter(
-      (p) => p.category === this.currentProduct!.category && p.id !== this.currentProduct!.id
+      (p) => p.category === this.currentProduct!.category && p.id !== this.currentProduct!.id,
     )
       .slice(0, 4)
       .map((p) => ({

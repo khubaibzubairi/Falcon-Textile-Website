@@ -1,38 +1,61 @@
-<div class="flex flex-col lg:grid lg:grid-cols-2 min-h-[60vh] border-b border-maison-stone dark:border-dark-border">
+<div
+  class="flex flex-col lg:grid lg:grid-cols-2 min-h-[60vh] border-b border-maison-stone dark:border-dark-border"
+>
   <!-- Left — large image -->
   <div class="relative overflow-hidden min-h-[40vh] lg:min-h-full group">
     <img
       src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=85"
       alt="MAISON atelier — behind the scenes"
-      class="w-full h-full object-cover object-center grayscale-[10%] transition-transform duration-[1200ms] ease-luxe group-hover:scale-[1.02]"
+      class="w-full min-h-[40vh] lg:min-h-full object-cover object-center grayscale-[10%] transition-transform duration-[1200ms]"
     />
-    <div class="absolute bottom-6 left-6 border border-maison-white/50 bg-maison-black/30 backdrop-blur-sm px-4 py-2">
-      <p class="font-mono text-2xs tracking-ultra uppercase text-maison-white">Est. 2018 — London</p>
+    <div
+      class="absolute bottom-6 left-6 border border-maison-white/50 bg-maison-black/30 backdrop-blur-sm px-4 py-2"
+    >
+      <p class="font-mono text-2xs tracking-ultra uppercase text-maison-white">
+        Est. 2018 — London
+      </p>
     </div>
   </div>
 
   <!-- Right — headline panel -->
-  <div class="flex flex-col justify-between px-5 py-12 md:px-14 md:py-16 border-t lg:border-t-0 lg:border-l border-maison-stone dark:border-dark-border">
+  <div
+    class="flex flex-col justify-between px-5 py-12 md:px-14 md:py-16 border-t lg:border-t-0 lg:border-l border-maison-stone dark:border-dark-border"
+  >
     <div>
       <p class="font-mono text-2xs tracking-ultra uppercase text-accent mb-6">About MAISON</p>
-      <h1 class="font-display font-light leading-none tracking-tightest text-maison-black dark:text-dark-heading text-5xl md:text-7xl mb-8">
-        Clothes that<br />mean<br /><em class="italic text-accent">something.</em>
+      <h1
+        class="font-display font-medium leading-none tracking-tightest text-maison-black dark:text-dark-heading text-5xl md:text-7xl mb-8"
+      >
+        Clothes that<br />mean<br /><em class="italic text-accent font-[serif]">something.</em>
       </h1>
-      <p class="font-sans text-sm md:text-base leading-relaxed text-maison-ash dark:text-dark-muted max-w-[44ch]">
+      <p
+        class="font-sans text-sm md:text-base leading-relaxed text-maison-ash dark:text-dark-muted max-w-[44ch]"
+      >
         MAISON is a London-based fashion production studio built for brands that believe what they
-        make should outlast the season it was designed for. We are a partner, not just a manufacturer.
+        make should outlast the season it was designed for. We are a partner, not just a
+        manufacturer.
       </p>
     </div>
 
     <!-- Stat pills -->
-    <div class="grid grid-cols-2 gap-3 mt-10 lg:mt-0">
+    <div class="grid grid-cols-2 gap-3 mt-10 lg:mt-8">
       @for (stat of stats(); track stat.label) {
-        <div class="p-4 border border-maison-stone dark:border-dark-border hover:border-accent transition-colors duration-250 ease-luxe group cursor-default">
-          <p class="font-display font-light text-3xl leading-none text-maison-ink dark:text-dark-heading group-hover:text-accent transition-colors duration-250">
+        <div
+          class="p-4 border border-maison-stone dark:border-dark-border hover:border-accent transition-colors duration-250 ease-luxe group cursor-default"
+        >
+          <p
+            class="font-display font-light text-3xl leading-none text-maison-ink dark:text-dark-heading group-hover:text-accent transition-colors duration-250"
+          >
             {{ stat.value }}
           </p>
-          <p class="font-sans text-xs text-maison-charcoal dark:text-dark-primary mt-1">{{ stat.label }}</p>
-          <p class="font-mono text-2xs tracking-wide uppercase text-maison-mist dark:text-dark-muted mt-0.5">{{ stat.sub }}</p>
+          <p class="font-sans text-xs text-maison-charcoal dark:text-dark-primary mt-1">
+            {{ stat.label }}
+          </p>
+          <p
+            class="font-mono text-2xs tracking-wide uppercase text-maison-mist dark:text-dark-muted mt-0.5"
+          >
+            {{ stat.sub }}
+          </p>
         </div>
       }
     </div>

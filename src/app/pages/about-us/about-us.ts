@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Breadcrumb } from '../../shared/breadcrumb/breadcrumb';
 import { AboutHero } from './hero/about-hero';
 import { AboutNarrative } from './narrative/about-narrative';
@@ -6,6 +6,7 @@ import { AboutTimeline, Milestone } from './timeline/about-timeline';
 import { AboutValues, Value } from './values/about-values';
 import { AboutFounder } from './founder/about-founder';
 import { AboutCta } from './cta/about-cta';
+import { SeoService } from '../../shared/seo.service';
 
 @Component({
   selector: 'app-about-us',
@@ -14,7 +15,19 @@ import { AboutCta } from './cta/about-cta';
   templateUrl: './about-us.html',
   styleUrl: './about-us.scss',
 })
-export class AboutUs {
+export class AboutUs implements OnInit {
+  private seo = inject(SeoService);
+
+  ngOnInit(): void {
+    this.seo.updateMetaTags({
+      title: 'Our Story - Falcon Textile Garments',
+      description:
+        'Founded in 2018, Falcon Textile Garments brings intention and craft to wholesale fashion manufacturing. Learn about our journey, values, and commitment to quality.',
+      keywords: 'about falcon, fashion manufacturing story, sustainable fashion, craft manufacturing',
+      url: 'https://falcontextilegarments.com/about-us',
+      type: 'website',
+    });
+  }
   stats = [
     { value: '2018', label: 'Founded', sub: 'London, UK' },
     { value: '40+', label: 'Brand partners', sub: 'across 12 countries' },

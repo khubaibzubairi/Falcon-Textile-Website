@@ -38,9 +38,11 @@
     <!-- Brand column — full width on mobile, 2fr on desktop -->
     <div class="col-span-2 md:col-span-1 mb-10 md:mb-0 md:pr-16">
       <!-- Logo -->
-      <p class="font-mono text-2xl tracking-ultra text-maison-charcoal dark:text-maison-white mb-5">
-        MAISON
-      </p>
+      <div class="logo">
+        <a routerLink="/" class="w-32 dark:bg-white p-2 rounded-md flex mb-3">
+          <img [src]="['assets/images/logo.png']" class="w-32" alt="" />
+        </a>
+      </div>
 
       <!-- Tagline -->
       <p

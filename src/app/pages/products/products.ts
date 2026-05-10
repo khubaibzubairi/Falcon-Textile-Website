@@ -5,6 +5,7 @@ import { ProductsSidebar } from './sidebar/products-sidebar';
 import { ProductsToolbar } from './toolbar/products-toolbar';
 import { ProductsGrid } from './grid/products-grid';
 import { AllProducts, Categories } from './products.utils';
+import { SeoService } from '../../shared/seo.service';
 
 export interface Product {
   id: number;
@@ -28,6 +29,7 @@ export type ViewMode = 'grid' | 'list';
 })
 export class Products implements OnInit {
   private route = inject(ActivatedRoute);
+  private seo = inject(SeoService);
   // ── View mode toggle ──────────────────────────────────────────────────────
   viewMode = signal<ViewMode>('grid');
 
@@ -64,6 +66,15 @@ export class Products implements OnInit {
   }
 
   ngOnInit(): void {
+    this.seo.updateMetaTags({
+      title: 'Products & Services - Falcon Textile Garments',
+      description:
+        'Browse our collection of premium wholesale fashion products. Custom manufacturing, private label, and wholesale orders available.',
+      keywords: 'wholesale products, fashion catalog, custom manufacturing, private label clothing',
+      url: 'https://falcontextilegarments.com/products',
+      type: 'website',
+    });
+
     this.route.queryParams.subscribe((params) => {
       if (params['category']) {
         this.activeCategory.set(params['category']);
